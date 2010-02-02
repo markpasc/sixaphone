@@ -3,7 +3,7 @@
 import logging
 from typepadapp.settings import *
 
-BACKEND_URL = 'https://api.typepad.com/'
+BACKEND_URL = 'https://api.typepad.com'
 
 AUTH_PROFILE_MODULE = ''
 
