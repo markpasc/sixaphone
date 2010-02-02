@@ -2,6 +2,14 @@
 
 {% block content %}
 
-    <h1> HI </h1>
+    {% for event in events %}
+        <div id="event-{{ event.xid }}" class="event">
+
+            <h2 class="title">{{ event.published }}</h2>
+
+            <p>blah blah blah</p>
+
+        </div>
+    {% endfor %}
 
 {% endblock %}

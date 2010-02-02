@@ -5,6 +5,8 @@ from typepadapp.settings import *
 
 BACKEND_URL = 'https://api.typepad.com/'
 
+AUTH_PROFILE_MODULE = ''
+
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
@@ -88,6 +90,8 @@ MIDDLEWARE_CLASSES = (
 )
 
 ROOT_URLCONF = 'sfoncom.urls'
+
+AUTHENTICATION_BACKENDS = ('typepadapp.backends.TypePadBackend',)
 
 TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
