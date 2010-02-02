@@ -8,7 +8,8 @@ import typepad
 def home(request):
     with typepad.client.batch_request():
         request.user = get_user(request)
+        events = request.group.events
 
     return TemplateResponse(request, 'sixaphone/home.html', {
-        'moose': True,
+        'events': events,
     })
