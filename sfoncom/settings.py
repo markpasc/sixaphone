@@ -1,5 +1,10 @@
 # Django settings for sfoncom project.
 
+import logging
+from typepadapp.settings import *
+
+BACKEND_URL = 'https://api.typepad.com/'
+
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
@@ -57,10 +62,29 @@ TEMPLATE_LOADERS = (
 #     'django.template.loaders.eggs.load_template_source',
 )
 
+TEMPLATE_CONTEXT_PROCESSORS = (
+    "django.core.context_processors.auth",
+    "django.core.context_processors.debug",
+    "django.core.context_processors.i18n",
+    "django.core.context_processors.media",
+    #"django.contrib.messages.context_processors.messages",
+    "django.core.context_processors.request",
+    "djangoflash.context_processors.flash",
+    "makeaface.context_processors.ganalytics",
+)
+
 MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
+    #'django.contrib.csrf.middleware.CsrfMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+
+    'djangoflash.middleware.FlashMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
+
+    'typepadapp.middleware.ApplicationMiddleware',
+    'typepadapp.middleware.UserAgentMiddleware',
+    'typepadapp.middleware.AuthorizationExceptionMiddleware',
 )
 
 ROOT_URLCONF = 'sfoncom.urls'
@@ -72,8 +96,13 @@ TEMPLATE_DIRS = (
 )
 
 INSTALLED_APPS = (
-    'django.contrib.auth',
+    #'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.sites',
+    'debug_toolbar',
+    'typepadapp',
+    'sixaphone',
 )
+
+from local_settings import *

@@ -1,0 +1,5 @@
+.env
+*.pyc
+sfoncom/local_settings.py
+*.egg-info
+pip-log.txt
