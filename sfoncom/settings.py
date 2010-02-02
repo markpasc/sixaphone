@@ -70,7 +70,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     #"django.contrib.messages.context_processors.messages",
     "django.core.context_processors.request",
     "djangoflash.context_processors.flash",
-    "makeaface.context_processors.ganalytics",
+    #"makeaface.context_processors.ganalytics",
 )
 
 MIDDLEWARE_CLASSES = (

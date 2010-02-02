@@ -3,3 +3,4 @@
 sfoncom/local_settings.py
 *.egg-info
 pip-log.txt
+sfoncom/sfoncom.db
