@@ -10,7 +10,7 @@
             {% ifequal event.object.object_type "tag:api.typepad.com,2009:Audio" %}
                 {% for audio in event.object.links.rel__enclosure %}{% if forloop.first %}
 
-                <div id="player-{{ event.xid }}" class="player">
+                <div id="player-{{ event.xid }}" class="player player-stopped">
 
                     <h2 class="title">
                         <a href="{{ audio.href }}">{{ event.published|date:"g:i" }}
@@ -45,16 +45,28 @@
                                 window.console.log('YAY PLAYED');
                             },
                             onplay: function () {
-                                $('#player-{{ event.xid }}').addClass('playing').removeClass('paused');
+                                $('#player-{{ event.xid }}')
+                                    .removeClass('player-stopped')
+                                    .addClass('player-playing')
+                                    .removeClass('player-paused');
                             },
                             onpause: function () {
-                                $('#player-{{ event.xid }}').removeClass('playing').addClass('paused');
+                                $('#player-{{ event.xid }}')
+                                    .removeClass('player-stopped')
+                                    .removeClass('player-playing')
+                                    .addClass('player-paused');
                             },
                             onresume: function () {
-                                $('#player-{{ event.xid }}').addClass('playing').removeClass('paused');
+                                $('#player-{{ event.xid }}')
+                                    .removeClass('player-stopped')
+                                    .addClass('player-playing')
+                                    .removeClass('player-paused');
                             },
                             onfinish: function () {
-                                $('#player-{{ event.xid }}').removeClass('playing').removeClass('paused');
+                                $('#player-{{ event.xid }}')
+                                    .addClass('player-stopped')
+                                    .removeClass('player-playing')
+                                    .removeClass('player-paused');
                             }
                         });
 
