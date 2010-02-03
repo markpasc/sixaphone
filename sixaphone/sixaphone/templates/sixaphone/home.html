@@ -8,39 +8,78 @@
     {% for event in events %}
         {% if event.object %}
             {% ifequal event.object.object_type "tag:api.typepad.com,2009:Audio" %}
+                {% for audio in event.object.links.rel__enclosure %}{% if forloop.first %}
 
-                <div id="event-{{ event.xid }}" class="event">
+                <div id="player-{{ event.xid }}" class="player">
+
                     <h2 class="title">
-                        {{ event.published|date:"g:i" }}
-                        <span class="ampm">{{ event.published|date:"A" }}</span>
-                        {{ event.published|date:"j F Y" }}
+                        <a href="{{ audio.href }}">{{ event.published|date:"g:i" }}
+                            <span class="ampm">{{ event.published|date:"A" }}</span>
+                            {{ event.published|date:"j F Y" }}</a>
+
+                        <span class="status-playing">▶</span>
+                        <span class="status-paused">▮▮</span>
                     </h2>
 
-                    <p><span class="tp-button"><span class="button button-play">
-                        <a id="play-{{ event.xid }}" href="#">Play</a>
-                    </span></span></p>
+                    <div class="statusbar">
+                        <div id="loading-{{ event.xid }}" class="loading"></div>
+                        <div id="position-{{ event.xid }}" class="position"></div>
+                    </div>
 
                     <script type="text/javascript">
                     soundManager.onready(function (status) {
                         if (!status.success)
                             return;
 
-                        {% for encl in event.object.links.rel__enclosure %}{% if forloop.first %}
                         soundManager.createSound({
                             id: 'event-{{ event.xid }}',
-                            url: '{{ encl.href }}',
+                            url: '{{ audio.href }}',
+                            whileloading: function () {
+                                var loaded = (this.bytesTotal == 0 ? 0 : 100 * this.bytesLoaded / this.bytesTotal);
+                                $('#loading-{{ event.xid }}').css({width: loaded + '%'});
+                            },
+                            whileplaying: function () {
+                                window.console.log('YAY PLAYING');
+                                var played = (this.duration == 0 ? 0 : 100 * this.position / this.duration);
+                                $('#position-{{ event.xid }}').css({width: played + '%'});
+                                window.console.log('YAY PLAYED');
+                            },
+                            onplay: function () {
+                                $('#player-{{ event.xid }}').addClass('playing').removeClass('paused');
+                            },
+                            onpause: function () {
+                                $('#player-{{ event.xid }}').removeClass('playing').addClass('paused');
+                            },
+                            onresume: function () {
+                                $('#player-{{ event.xid }}').addClass('playing').removeClass('paused');
+                            },
+                            onfinish: function () {
+                                $('#player-{{ event.xid }}').removeClass('playing').removeClass('paused');
+                            }
                         });
-                        {% endif %}{% endfor %}
 
-                        $('#play-{{ event.xid }}').click(function () {
-                            soundManager.stopAll();
-                            soundManager.play('event-{{ event.xid }}');
+                        $('#player-{{ event.xid }} h2 a').click(function () {
+                            $(this).blur();
+
+                            var snd = soundManager.getSoundById('event-{{ event.xid }}');
+                            if (snd.playState == 0) {
+                                soundManager.stopAll();
+                                snd.play();
+                            }
+                            else if (snd.paused) {
+                                snd.resume();
+                            }
+                            else {
+                                snd.pause();
+                            }
+
                             return false;
                         });
                     });
                     </script>
                 </div>
 
+                {% endif %}{% endfor %}
             {% endifequal %}
         {% endif %}
     {% endfor %}
