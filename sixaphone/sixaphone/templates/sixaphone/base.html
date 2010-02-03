@@ -6,6 +6,11 @@
     <link rel="stylesheet" type="text/css" href="{% url static path="sixaphone/960/reset.css" %}">
     <link rel="stylesheet" type="text/css" href="{% url static path="sixaphone/960/text.css" %}">
     <link rel="stylesheet" type="text/css" href="{% url static path="sixaphone/960/960.css" %}">
+    <script type="text/javascript" src="{% url static path="sixaphone/jquery.js" %}"></script>
+    <script type="text/javascript" src="{% url static path="sixaphone/soundman/soundmanager2.js" %}"></script>
+    <script type="text/javascript">
+        soundManager.url = '{% url static path="sixaphone/soundman/" %}';
+    </script>
 </head><body>
 
     <div id="bigbox">

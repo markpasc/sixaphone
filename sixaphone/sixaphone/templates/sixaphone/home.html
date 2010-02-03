@@ -2,14 +2,43 @@
 
 {% block content %}
 
+    <script type="text/javascript">
+    </script>
+
     {% for event in events %}
-        <div id="event-{{ event.xid }}" class="event">
+        {% if event.object %}
+            {% ifequal event.object.object_type "tag:api.typepad.com,2009:Audio" %}
 
-            <h2 class="title">{{ event.published }}</h2>
+                <div id="event-{{ event.xid }}" class="event">
+                    <h2 class="title">{{ event.published }}</h2>
 
-            <p>blah blah blah</p>
+                    <p><span class="tp-button"><span class="button button-play">
+                        <a id="play-{{ event.xid }}" href="#">Play</a>
+                    </span></span></p>
 
-        </div>
+                    <script type="text/javascript">
+                    soundManager.onready(function (status) {
+                        if (!status.success)
+                            return;
+
+                        {% for encl in event.object.links.rel__enclosure %}{% if forloop.first %}
+                        soundManager.createSound({
+                            id: 'event-{{ event.xid }}',
+                            url: '{{ encl.href }}',
+                        });
+                        {% endif %}{% endfor %}
+
+                        $('#play-{{ event.xid }}').click(function () {
+                            soundManager.stopAll();
+                            soundManager.play('event-{{ event.xid }}');
+                            return false;
+                        });
+                    });
+                    </script>
+                </div>
+
+            {% endifequal %}
+        {% endif %}
     {% endfor %}
 
 {% endblock %}
