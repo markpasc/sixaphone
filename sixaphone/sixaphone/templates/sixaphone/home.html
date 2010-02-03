@@ -62,6 +62,12 @@
                                     .addClass('player-playing')
                                     .removeClass('player-paused');
                             },
+                            onstop: function () {
+                                $('#player-{{ event.xid }}')
+                                    .addClass('player-stopped')
+                                    .removeClass('player-playing')
+                                    .removeClass('player-paused');
+                            },
                             onfinish: function () {
                                 $('#player-{{ event.xid }}')
                                     .addClass('player-stopped')
