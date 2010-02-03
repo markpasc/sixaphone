@@ -1,0 +1,44 @@
+
+#sounds {
+    color: #ffffff;
+    z-index: 200;
+    position: fixed;
+    bottom: 25px;
+    left: 25px;
+}
+
+#sounds, #sounds li {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: inline;
+}
+
+#sounds a {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    background: #ffff00;
+    overflow: hidden;
+    -webkit-border-radius: 10px;
+    margin-right: 25px;
+    text-indent: -1000px;
+    opacity: 0.5;
+}
+
+#sounds a.active {
+    opacity: 1;
+}
+
+h1 {
+    z-index: 200;
+    position: fixed;
+    top: 25px;
+    left: 25px;
+    color: #ffffff;
+    font-family: monospace;
+    font-weight: bold;
+    font-size: 48px;
+    
+}
+
