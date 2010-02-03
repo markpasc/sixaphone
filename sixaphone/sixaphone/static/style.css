@@ -15,3 +15,8 @@
     display: inline-block;
     float: none;
 }
+
+.ampm {
+    font-size: smaller;
+    text-transform: uppercase;
+}

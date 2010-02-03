@@ -10,7 +10,11 @@
             {% ifequal event.object.object_type "tag:api.typepad.com,2009:Audio" %}
 
                 <div id="event-{{ event.xid }}" class="event">
-                    <h2 class="title">{{ event.published }}</h2>
+                    <h2 class="title">
+                        {{ event.published|date:"g:i" }}
+                        <span class="ampm">{{ event.published|date:"A" }}</span>
+                        {{ event.published|date:"j F Y" }}
+                    </h2>
 
                     <p><span class="tp-button"><span class="button button-play">
                         <a id="play-{{ event.xid }}" href="#">Play</a>
