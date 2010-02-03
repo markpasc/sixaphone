@@ -5,3 +5,13 @@
 #content {
     margin-top: 50px;
 }
+
+#hi img {
+    vertical-align: middle;
+    width: 2em;
+}
+
+.tp-button {
+    display: inline-block;
+    float: none;
+}
