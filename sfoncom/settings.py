@@ -73,6 +73,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "django.core.context_processors.request",
     "djangoflash.context_processors.flash",
     #"makeaface.context_processors.ganalytics",
+    "sixaphone.context_processors.typekit",
 )
 
 MIDDLEWARE_CLASSES = (

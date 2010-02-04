@@ -2,16 +2,20 @@
 <html><head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <title>{% block htmltitle %}Sixaphone{% endblock %}</title>
-    <link rel="stylesheet" type="text/css" href="{% url static path="sixaphone/buttons.css" %}">
-    <link rel="stylesheet" type="text/css" href="{% url static path="sixaphone/style.css" %}">
     <link rel="stylesheet" type="text/css" href="{% url static path="sixaphone/960/reset.css" %}">
     <link rel="stylesheet" type="text/css" href="{% url static path="sixaphone/960/text.css" %}">
     <link rel="stylesheet" type="text/css" href="{% url static path="sixaphone/960/960.css" %}">
+    <link rel="stylesheet" type="text/css" href="{% url static path="sixaphone/buttons.css" %}">
+    <link rel="stylesheet" type="text/css" href="{% url static path="sixaphone/style.css" %}">
     <script type="text/javascript" src="{% url static path="sixaphone/jquery.js" %}"></script>
     <script type="text/javascript" src="{% url static path="sixaphone/soundman/soundmanager2.js" %}"></script>
     <script type="text/javascript">
         soundManager.url = '{% url static path="sixaphone/soundman/" %}';
     </script>
+    {% if typekit_code %}
+    <script type="text/javascript" src="http://use.typekit.com/{{ typekit_code }}.js"></script>
+    <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+    {% endif %}
 </head><body>
 
     <div id="bigbox">
@@ -36,6 +40,7 @@
 
         <div class="grid_5">
             <h1><img src="{% url static path="sixaphone/phone.jpg" %}"></h1>
+            <h1 class="tk-chippewa-falls">Six-A-Phone</h1>
         </div>
 
         <div class="grid_7">
