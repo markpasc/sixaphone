@@ -12,90 +12,93 @@
 
                 <div id="player-{{ event.xid }}" class="player player-stopped">
 
+                    <div class="control">
+                        <span class="tp-button"><span class="button button-xl">
+                            <a href="{{ audio.href }}" class="play"><span class="control-text-play">▶</span><span class="control-text-pause">▮▮</span></a>
+                        </span></span>
+                    </div>
+
                     <h2 class="title">
-                        <a href="{{ audio.href }}">{{ event.published|date:"g:i" }}
+                        <a href="{{ audio.href }}" class="play">{{ event.published|date:"g:i" }}
                             <span class="ampm">{{ event.published|date:"A" }}</span>
                             {{ event.published|date:"j F Y" }}</a>
-
-                        <span class="status-playing">▶</span>
-                        <span class="status-paused">▮▮</span>
                     </h2>
+
+                    <br class="clear">
 
                     <div class="statusbar">
                         <div id="loading-{{ event.xid }}" class="loading"></div>
                         <div id="position-{{ event.xid }}" class="position"></div>
                     </div>
-
-                    <script type="text/javascript">
-                    soundManager.onready(function (status) {
-                        if (!status.success)
-                            return;
-
-                        soundManager.createSound({
-                            id: 'event-{{ event.xid }}',
-                            url: '{{ audio.href }}',
-                            whileloading: function () {
-                                var loaded = (this.bytesTotal == 0 ? 0 : 100 * this.bytesLoaded / this.bytesTotal);
-                                $('#loading-{{ event.xid }}').css({width: loaded + '%'});
-                            },
-                            whileplaying: function () {
-                                window.console.log('YAY PLAYING');
-                                var played = (this.duration == 0 ? 0 : 100 * this.position / this.duration);
-                                $('#position-{{ event.xid }}').css({width: played + '%'});
-                                window.console.log('YAY PLAYED');
-                            },
-                            onplay: function () {
-                                $('#player-{{ event.xid }}')
-                                    .removeClass('player-stopped')
-                                    .addClass('player-playing')
-                                    .removeClass('player-paused');
-                            },
-                            onpause: function () {
-                                $('#player-{{ event.xid }}')
-                                    .removeClass('player-stopped')
-                                    .removeClass('player-playing')
-                                    .addClass('player-paused');
-                            },
-                            onresume: function () {
-                                $('#player-{{ event.xid }}')
-                                    .removeClass('player-stopped')
-                                    .addClass('player-playing')
-                                    .removeClass('player-paused');
-                            },
-                            onstop: function () {
-                                $('#player-{{ event.xid }}')
-                                    .addClass('player-stopped')
-                                    .removeClass('player-playing')
-                                    .removeClass('player-paused');
-                            },
-                            onfinish: function () {
-                                $('#player-{{ event.xid }}')
-                                    .addClass('player-stopped')
-                                    .removeClass('player-playing')
-                                    .removeClass('player-paused');
-                            }
-                        });
-
-                        $('#player-{{ event.xid }} h2 a').click(function () {
-                            $(this).blur();
-
-                            var snd = soundManager.getSoundById('event-{{ event.xid }}');
-                            if (snd.playState == 0) {
-                                soundManager.stopAll();
-                                snd.play();
-                            }
-                            else if (snd.paused) {
-                                snd.resume();
-                            }
-                            else {
-                                snd.pause();
-                            }
-
-                            return false;
-                        });
-                    });
-                    </script>
                 </div>
+
+                <script type="text/javascript">
+                soundManager.onready(function (status) {
+                    if (!status.success)
+                        return;
+
+                    soundManager.createSound({
+                        id: 'event-{{ event.xid }}',
+                        url: '{{ audio.href }}',
+                        whileloading: function () {
+                            var loaded = (this.bytesTotal == 0 ? 0 : 100 * this.bytesLoaded / this.bytesTotal);
+                            $('#loading-{{ event.xid }}').css({width: loaded + '%'});
+                        },
+                        whileplaying: function () {
+                            var played = (this.duration == 0 ? 0 : 100 * this.position / this.duration);
+                            $('#position-{{ event.xid }}').css({width: played + '%'});
+                        },
+                        onplay: function () {
+                            $('#player-{{ event.xid }}')
+                                .removeClass('player-stopped')
+                                .addClass('player-playing')
+                                .removeClass('player-paused');
+                        },
+                        onpause: function () {
+                            $('#player-{{ event.xid }}')
+                                .removeClass('player-stopped')
+                                .removeClass('player-playing')
+                                .addClass('player-paused');
+                        },
+                        onresume: function () {
+                            $('#player-{{ event.xid }}')
+                                .removeClass('player-stopped')
+                                .addClass('player-playing')
+                                .removeClass('player-paused');
+                        },
+                        onstop: function () {
+                            $('#player-{{ event.xid }}')
+                                .addClass('player-stopped')
+                                .removeClass('player-playing')
+                                .removeClass('player-paused');
+                        },
+                        onfinish: function () {
+                            $('#player-{{ event.xid }}')
+                                .addClass('player-stopped')
+                                .removeClass('player-playing')
+                                .removeClass('player-paused');
+                        }
+                    });
+
+                    $('#player-{{ event.xid }} a.play').click(function () {
+                        $(this).blur();
+
+                        var snd = soundManager.getSoundById('event-{{ event.xid }}');
+                        if (snd.playState == 0) {
+                            soundManager.stopAll();
+                            snd.play();
+                        }
+                        else if (snd.paused) {
+                            snd.resume();
+                        }
+                        else {
+                            snd.pause();
+                        }
+
+                        return false;
+                    });
+                });
+                </script>
 
                 {% endif %}{% endfor %}
             {% endifequal %}

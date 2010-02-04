@@ -22,64 +22,52 @@
 .status-playing, .status-paused
     display: none
 
+=borderradius(!whassa)
+    border-radius: #{!whassa}
+    -moz-border-radius: #{!whassa}
+    -webkit-border-radius: #{!whassa}
+
 .player
     position: relative
     padding: 10px
+    margin: 0 0 10px 0
 
-    background: green
-    color: white
+    background: #eee
+
+    .control
+        float: left
+
+        .button a
+            +borderradius(40px)
+            text-align: center
+
+            span
+                padding: 0
+
+        .control-text-pause
+            display: none
 
     h2.title
-        line-height: 1em
         margin: 0
-        padding: 0 0 10px 0
-
-        a:link, a:hover, a:active, a:visited
-            color: white
-            text-decoration: none
-
-        a:hover
-            text-decoration: underline
 
     .statusbar
-        display: block
         position: relative
         height: 10px
         background: #fff
-        z-index: 1
+        margin-top: 10px
 
-        .loading, .position
+        .position, .loading
             position: absolute
             height: 10px
             background: #cfc
-            z-index: 2
 
         .position
             background: #393
-            z-index: 3
 
 .player-playing
-    .status-playing
-        display: inline
+    .control
+        .control-text-play
+            display: none
 
-.player-paused
-    background: #999
-
-    .status-paused
-        display: inline
-
-.player-stopped
-    background: transparent
-    color: black
-
-    h2.title
-        padding: 0
-
-        a:link, a:hover, a:active, a:visited
-            color: black
-
-    &:hover
-        background: #eee
-
-    .statusbar
-        display: none
+        .control-text-pause
+            display: inline
