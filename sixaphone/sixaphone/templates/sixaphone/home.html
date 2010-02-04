@@ -89,6 +89,7 @@
 
                         var snd = soundManager.getSoundById('event-{{ event.xid }}');
                         if (snd.playState == 0) {
+                            $('.statusbar .position').css({width: 0});
                             soundManager.stopAll();
                             snd.play();
                         }
