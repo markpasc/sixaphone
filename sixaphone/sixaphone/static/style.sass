@@ -50,37 +50,40 @@ h1
     background-image: -moz-linear-gradient(#{!top}, #{!bottom})
     filter: progid:DXImageTransform.Microsoft.gradient(enabled='true', startColorstr=#{!top}, endColorstr=#{!bottom}, GradientType=0)
 
-.player
+.tp-button
+    z-index: 10
+
+    .button-play a
+        text-align: center
+        height: 20px
+        +borderradius(20px)
+        +buttongradient(#fff, #ccc)
+        +boxshadow(#000 0 1px 2px)
+
+        span
+            padding: 0
+
+        &:hover
+            +buttongradient(#eee, #bbb)
+
+        &:active
+            +buttongradient(#bbb, #eee)
+            +boxshadow(#000 0 0px 0px)
+
+.player, .player-box
     position: relative
     padding: 10px
     margin: 0 0 10px 0
-    +boxshadow(#999 0 1px 2px)
 
+.player
+    +boxshadow(#999 0 1px 2px)
     background: #eee
 
     .control
         float: left
 
-        .tp-button
-            z-index: 10
-
         .button a
-            text-align: center
             width: 20px
-            height: 20px
-            +borderradius(20px)
-            +buttongradient(#fff, #ccc)
-            +boxshadow(#000 0 1px 2px)
-
-            span
-                padding: 0
-
-            &:hover
-                +buttongradient(#eee, #bbb)
-
-            &:active
-                +buttongradient(#bbb, #eee)
-                +boxshadow(#000 0 0px 0px)
 
         .control-text-pause
             display: none
