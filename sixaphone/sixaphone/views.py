@@ -24,5 +24,5 @@ def home(request):
 
     return TemplateResponse(request, 'sixaphone/home.html', {
         'events': events,
-        'audio_events': audio_events_from_events(events),
+        'audio_events': list(audio_events_from_events(events)),
     })

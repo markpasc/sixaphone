@@ -37,110 +37,104 @@
         });
     </script>
 
-    {% for event in events %}
-        {% if event.object %}
-            {% ifequal event.object.object_type "tag:api.typepad.com,2009:Audio" %}
-                {% for audio in event.object.links.rel__enclosure %}{% if forloop.first %}
+    {% for audio, event in audio_events %}
 
-                <div id="player-{{ event.xid }}" class="player player-stopped">
+        <div id="player-{{ event.xid }}" class="player player-stopped">
 
-                    <div class="control">
-                        <span class="tp-button"><span class="button button-xl button-play">
-                            <a href="{{ audio.href }}" class="play"><span class="control-text-play">▶</span><span class="control-text-pause">▮▮</span></a>
-                        </span></span>
-                    </div>
+            <div class="control">
+                <span class="tp-button"><span class="button button-xl button-play">
+                    <a href="{{ audio.href }}" class="play"><span class="control-text-play">▶</span><span class="control-text-pause">▮▮</span></a>
+                </span></span>
+            </div>
 
-                    <div class="statusbar">
-                        <div class="statusbar-inner">
-                        <div id="loading-{{ event.xid }}" class="loading"></div>
-                        <div id="position-{{ event.xid }}" class="position"></div>
-                        </div>
-                    </div>
-
-                    <br class="clear">
-
-                    <div class="data">
-                        <span class="when">{{ event.published|date:"g:i" }}
-                            <span class="ampm">{{ event.published|date:"A" }}</span>
-                            {{ event.published|date:"j F Y" }}</span>
-                    </div>
-
+            <div class="statusbar">
+                <div class="statusbar-inner">
+                <div id="loading-{{ event.xid }}" class="loading"></div>
+                <div id="position-{{ event.xid }}" class="position"></div>
                 </div>
+            </div>
 
-                <script type="text/javascript">
-                soundManager.onready(function (status) {
-                    if (!status.success)
-                        return;
+            <br class="clear">
 
-                    soundManager.createSound({
-                        id: 'event-{{ event.xid }}',
-                        url: '{{ audio.href }}',
-                        whileloading: function () {
-                            var loaded = (this.bytesTotal == 0 ? 0 : 100 * this.bytesLoaded / this.bytesTotal);
-                            $('#loading-{{ event.xid }}').css({width: loaded + '%'});
-                        },
-                        whileplaying: function () {
-                            var played = (this.duration == 0 ? 0 : 100 * this.position / this.duration);
-                            $('#position-{{ event.xid }}').css({width: played + '%'});
-                        },
-                        onplay: function () {
-                            $('#player-{{ event.xid }}')
-                                .removeClass('player-stopped')
-                                .addClass('player-playing')
-                                .removeClass('player-paused');
-                        },
-                        onpause: function () {
-                            $('#player-{{ event.xid }}')
-                                .removeClass('player-stopped')
-                                .removeClass('player-playing')
-                                .addClass('player-paused');
-                        },
-                        onresume: function () {
-                            $('#player-{{ event.xid }}')
-                                .removeClass('player-stopped')
-                                .addClass('player-playing')
-                                .removeClass('player-paused');
-                        },
-                        onstop: function () {
-                            $('#player-{{ event.xid }}')
-                                .addClass('player-stopped')
-                                .removeClass('player-playing')
-                                .removeClass('player-paused');
-                            $('#position-{{ event.xid }}').css({width: 0});
-                        },
-                        onfinish: function () {
-                            $('#player-{{ event.xid }}')
-                                .addClass('player-stopped')
-                                .removeClass('player-playing')
-                                .removeClass('player-paused')
-                                .trigger('finished');
-                        }
-                    });
+            <div class="data">
+                <span class="when">{{ event.published|date:"g:i" }}
+                    <span class="ampm">{{ event.published|date:"A" }}</span>
+                    {{ event.published|date:"j F Y" }}</span>
+            </div>
 
-                    $('#player-{{ event.xid }} a.play').click(function () {
-                        $(this).blur();
+        </div>
 
-                        var snd = soundManager.getSoundById('event-{{ event.xid }}');
-                        if (snd.playState == 0) {
-                            $('.statusbar .position').css({width: 0});
-                            soundManager.stopAll();
-                            snd.play();
-                        }
-                        else if (snd.paused) {
-                            snd.resume();
-                        }
-                        else {
-                            snd.pause();
-                        }
+        <script type="text/javascript">
+        soundManager.onready(function (status) {
+            if (!status.success)
+                return;
 
-                        return false;
-                    });
-                });
-                </script>
+            soundManager.createSound({
+                id: 'event-{{ event.xid }}',
+                url: '{{ audio.href }}',
+                whileloading: function () {
+                    var loaded = (this.bytesTotal == 0 ? 0 : 100 * this.bytesLoaded / this.bytesTotal);
+                    $('#loading-{{ event.xid }}').css({width: loaded + '%'});
+                },
+                whileplaying: function () {
+                    var played = (this.duration == 0 ? 0 : 100 * this.position / this.duration);
+                    $('#position-{{ event.xid }}').css({width: played + '%'});
+                },
+                onplay: function () {
+                    $('#player-{{ event.xid }}')
+                        .removeClass('player-stopped')
+                        .addClass('player-playing')
+                        .removeClass('player-paused');
+                },
+                onpause: function () {
+                    $('#player-{{ event.xid }}')
+                        .removeClass('player-stopped')
+                        .removeClass('player-playing')
+                        .addClass('player-paused');
+                },
+                onresume: function () {
+                    $('#player-{{ event.xid }}')
+                        .removeClass('player-stopped')
+                        .addClass('player-playing')
+                        .removeClass('player-paused');
+                },
+                onstop: function () {
+                    $('#player-{{ event.xid }}')
+                        .addClass('player-stopped')
+                        .removeClass('player-playing')
+                        .removeClass('player-paused');
+                    $('#position-{{ event.xid }}').css({width: 0});
+                },
+                onfinish: function () {
+                    $('#player-{{ event.xid }}')
+                        .addClass('player-stopped')
+                        .removeClass('player-playing')
+                        .removeClass('player-paused')
+                        .trigger('finished');
+                }
+            });
 
-                {% endif %}{% endfor %}
-            {% endifequal %}
-        {% endif %}
+            $('#player-{{ event.xid }} a.play').click(function () {
+                $(this).blur();
+
+                var snd = soundManager.getSoundById('event-{{ event.xid }}');
+                if (snd.playState == 0) {
+                    $('.statusbar .position').css({width: 0});
+                    soundManager.stopAll();
+                    snd.play();
+                }
+                else if (snd.paused) {
+                    snd.resume();
+                }
+                else {
+                    snd.pause();
+                }
+
+                return false;
+            });
+        });
+        </script>
+
     {% endfor %}
 
 {% endblock %}
