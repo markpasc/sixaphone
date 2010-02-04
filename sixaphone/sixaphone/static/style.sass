@@ -49,9 +49,13 @@
     .control
         float: left
 
+        .tp-button
+            z-index: 10
+
         .button a
             text-align: center
             width: 20px
+            height: 20px
             +borderradius(20px)
             +buttongradient(#fff, #ccc)
             +boxshadow(#000 0 1px 2px)
@@ -74,21 +78,26 @@
 
     .statusbar
         position: relative
-        height: 10px
+        height: 16px
+        z-index: 1
         background: #fff
-        margin-top: 10px
-        padding: 5px
+        margin: 4px 0 4px 22px
+        padding: 4px
 
         .statusbar-inner
             position: relative
 
         .position, .loading
             position: absolute
-            height: 10px
+            height: 16px
             background: #cfc
 
         .position
             background: #393
+
+    .data
+        margin-top: 10px
+        text-align: right
 
 .player-playing
     .control

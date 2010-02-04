@@ -18,20 +18,21 @@
                         </span></span>
                     </div>
 
-                    <h2 class="title">
-                        <a href="{{ audio.href }}" class="play">{{ event.published|date:"g:i" }}
-                            <span class="ampm">{{ event.published|date:"A" }}</span>
-                            {{ event.published|date:"j F Y" }}</a>
-                    </h2>
-
-                    <br class="clear">
-
                     <div class="statusbar">
                         <div class="statusbar-inner">
                         <div id="loading-{{ event.xid }}" class="loading"></div>
                         <div id="position-{{ event.xid }}" class="position"></div>
                         </div>
                     </div>
+
+                    <br class="clear">
+
+                    <div class="data">
+                        <span class="when">{{ event.published|date:"g:i" }}
+                            <span class="ampm">{{ event.published|date:"A" }}</span>
+                            {{ event.published|date:"j F Y" }}</span>
+                    </div>
+
                 </div>
 
                 <script type="text/javascript">
