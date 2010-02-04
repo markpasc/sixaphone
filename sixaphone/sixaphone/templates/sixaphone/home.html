@@ -71,6 +71,7 @@
                                 .addClass('player-stopped')
                                 .removeClass('player-playing')
                                 .removeClass('player-paused');
+                            $('#position-{{ event.xid }}').css({width: 0});
                         },
                         onfinish: function () {
                             $('#player-{{ event.xid }}')
