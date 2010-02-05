@@ -3,6 +3,7 @@ from __future__ import with_statement
 from django.contrib.auth import get_user
 from templateresponse import TemplateResponse
 import typepad
+from typepadapp.caching import CacheInvalidator
 
 
 def audio_events_from_events(events):
@@ -26,3 +27,13 @@ def home(request):
         'events': events,
         'audio_events': list(audio_events_from_events(events)),
     })
+
+
+def new_post(request):
+    if request.method != 'POST':
+        return HttpResponse('POST required', status=400, content_type='text/plain')
+
+    # TODO: anything to keep just anyone from poking this endpoint
+
+    CacheInvalidator(key=request.group.events)()
+    return HttpResponse('OK', content_type='text/plain')
