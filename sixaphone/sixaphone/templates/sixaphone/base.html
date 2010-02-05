@@ -11,6 +11,18 @@
     <script type="text/javascript" src="{% url static path="sixaphone/soundman/soundmanager2.js" %}"></script>
     <script type="text/javascript">
         soundManager.url = '{% url static path="sixaphone/soundman/" %}';
+        soundManager.flashLoadTimeout = 0;
+        soundManager.oninitmovie = function () {
+            $('#sm2-ctr-ctr').delay(1000).queue(function () {
+                if (!$('#sm2-ctr-ctr').hasClass('loaded')) {
+                    $('#sm2-ctr-ctr').addClass('blocked');
+                }
+                $(this).dequeue();
+            });
+        };
+        soundManager.onready(function () {
+            $('#sm2-ctr-ctr').addClass('loaded').removeClass('blocked');
+        });
     </script>
     {% if typekit_code %}
     <script type="text/javascript" src="http://use.typekit.com/{{ typekit_code }}.js"></script>
@@ -39,6 +51,10 @@
         </div>
 
         <div class="grid_5">
+            <div id="sm2-ctr-ctr">
+                <div id="sm2-container"></div>
+            </div>
+
             <h1><img src="{% url static path="sixaphone/phone.jpg" %}"></h1>
             <h1 class="tk-chippewa-falls">Six-A-Phone</h1>
         </div>
