@@ -17,7 +17,6 @@
             $('#play-all a').click(function () {
                 $.each(xids, function (i, val) {
                     if (i < xids.length - 1) {
-                        window.console.log('YAY HOOKING UP FINISHEVENT FOR ' + val);
                         $('#player-' + val).one('finished', function () {
                             soundManager.load('event-' + xids[i + 1]);
                             $('#player-' + xids[i + 1]).delay(1000).queue(function () {
