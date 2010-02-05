@@ -1,6 +1,7 @@
 from __future__ import with_statement
 
 from django.contrib.auth import get_user
+from django.http import HttpResponse
 from templateresponse import TemplateResponse
 import typepad
 from typepadapp.caching import CacheInvalidator
@@ -35,5 +36,5 @@ def new_post(request):
 
     # TODO: anything to keep just anyone from poking this endpoint
 
-    CacheInvalidator(key=request.group.events)()
+    CacheInvalidator(key=request.group.events)(None)
     return HttpResponse('OK', content_type='text/plain')
