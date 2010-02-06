@@ -1,5 +1,6 @@
 {% extends "sixaphone/base.html" %}
 {% load face %}
+{% load timezone_filters %}
 
 {% block content %}
 
@@ -65,9 +66,9 @@
             <br class="clear">
 
             <div class="data">
-                <span class="when">{{ event.published|date:"g:i" }}
-                    <span class="ampm">{{ event.published|date:"A" }}</span>
-                    {{ event.published|date:"j F Y" }}</span>
+                <span class="when">{{ event.published|localtime:"America/Los_Angeles"|date:"g:i" }}
+                    <span class="ampm">{{ event.published|localtime:"America/Los_Angeles"|date:"A" }}</span>
+                    {{ event.published|localtime:"America/Los_Angeles"|date:"j F Y" }}</span>
             </div>
 
         </div>

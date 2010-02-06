@@ -1,4 +1,4 @@
-- fix timestamps into Pacific timezone
+- fix timestamps into Pacific timezone @done
 - use randomly selected colors for progress bars
 - favoriting
 - tagging
