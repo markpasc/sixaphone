@@ -8,7 +8,11 @@
     <link rel="stylesheet" type="text/css" href="{% url static path="sixaphone/buttons.css" %}">
     <link rel="stylesheet" type="text/css" href="{% url static path="sixaphone/style.css" %}">
     <script type="text/javascript" src="{% url static path="sixaphone/jquery.js" %}"></script>
+    {% if debug %}
     <script type="text/javascript" src="{% url static path="sixaphone/soundman/soundmanager2.js" %}"></script>
+    {% else %}
+    <script type="text/javascript" src="{% url static path="sixaphone/soundman/soundmanager2-nodebug-jsmin.js" %}"></script>
+    {% endif %}
     <script type="text/javascript">
         soundManager.url = '{% url static path="sixaphone/soundman/" %}';
         soundManager.flashLoadTimeout = 0;
