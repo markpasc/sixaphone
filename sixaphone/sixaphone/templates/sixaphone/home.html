@@ -1,4 +1,5 @@
 {% extends "sixaphone/base.html" %}
+{% load face %}
 
 {% block content %}
 
@@ -46,7 +47,7 @@
 
     {% for audio, event in audio_events %}
 
-        <div id="player-{{ event.xid }}" class="player player-stopped">
+        <div id="player-{{ event.xid }}" class="player player-{{ event.xid|numerify }} player-stopped">
 
             <div class="control">
                 <span class="tp-button"><span class="button button-xl button-play">

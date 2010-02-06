@@ -118,7 +118,7 @@ h1 {
     .player .statusbar .position, .player .statusbar .loading {
       position: absolute;
       height: 16px;
-      background: #cfc; }
+      background: #dfb; }
     .player .statusbar .position {
       background: #90b518;
       box-shadow: 0 1px 2px #cccccc;
@@ -127,6 +127,31 @@ h1 {
   .player .data {
     margin-top: 10px;
     text-align: right; }
+
+.player-2 .statusbar .position {
+  background: #b51890; }
+.player-2 .statusbar .loading {
+  background: #fbd; }
+
+.player-3 .statusbar .position {
+  background: #1890b5; }
+.player-3 .statusbar .loading {
+  background: #bdf; }
+
+.player-4 .statusbar .position {
+  background: #9018b5; }
+.player-4 .statusbar .loading {
+  background: #dbf; }
+
+.player-5 .statusbar .position {
+  background: #18b590; }
+.player-5 .statusbar .loading {
+  background: #bfd; }
+
+.player-6 .statusbar .position {
+  background: #b59018; }
+.player-6 .statusbar .loading {
+  background: #fdb; }
 
 .player-playing .control .control-text-play {
   display: none; }
