@@ -1,0 +1,102 @@
+{% load face %}
+{% load timezone_filters %}
+
+<div id="player-{{ entry.xid }}" class="player player-{{ entry.xid|numerify }} player-stopped">
+
+    <div class="control">
+        <span class="tp-button"><span class="button button-xl button-play">
+            <a href="{{ audio.href }}" class="play disabled"><span class="control-text-play">▶</span><span class="control-text-pause">▮▮</span></a>
+        </span></span>
+    </div>
+
+    <div class="statusbar">
+        <div class="statusbar-inner">
+        <div id="loading-{{ entry.xid }}" class="loading"></div>
+        <div id="position-{{ entry.xid }}" class="position"></div>
+        </div>
+    </div>
+
+    <br class="clear">
+
+    <div class="data">
+        <a href="{% url entry xid=entry.xid %}" class="when">{{ entry.published|localtime:"America/Los_Angeles"|date:"g:i" }}
+            <span class="ampm">{{ entry.published|localtime:"America/Los_Angeles"|date:"A" }}</span>
+            {{ entry.published|localtime:"America/Los_Angeles"|date:"j F Y" }}</a>
+    </div>
+
+</div>
+
+<script type="text/javascript">
+$('#player-{{ entry.xid }} a.play').click(function () {
+    return false;
+});
+
+soundManager.onready(function (status) {
+    if (!status.success)
+        return;
+
+    soundManager.createSound({
+        id: 'sound-{{ entry.xid }}',
+        url: '{{ audio.href }}',
+        whileloading: function () {
+            var loaded = (this.bytesTotal == 0 ? 0 : 100 * this.bytesLoaded / this.bytesTotal);
+            $('#loading-{{ entry.xid }}').css({width: loaded + '%'});
+        },
+        whileplaying: function () {
+            var played = (this.duration == 0 ? 0 : 100 * this.position / this.duration);
+            $('#position-{{ entry.xid }}').css({width: played + '%'});
+        },
+        onplay: function () {
+            $('#player-{{ entry.xid }}')
+                .removeClass('player-stopped')
+                .addClass('player-playing')
+                .removeClass('player-paused');
+        },
+        onpause: function () {
+            $('#player-{{ entry.xid }}')
+                .removeClass('player-stopped')
+                .removeClass('player-playing')
+                .addClass('player-paused');
+        },
+        onresume: function () {
+            $('#player-{{ entry.xid }}')
+                .removeClass('player-stopped')
+                .addClass('player-playing')
+                .removeClass('player-paused');
+        },
+        onstop: function () {
+            $('#player-{{ entry.xid }}')
+                .addClass('player-stopped')
+                .removeClass('player-playing')
+                .removeClass('player-paused');
+            $('#position-{{ entry.xid }}').css({width: 0});
+        },
+        onfinish: function () {
+            $('#player-{{ entry.xid }}')
+                .addClass('player-stopped')
+                .removeClass('player-playing')
+                .removeClass('player-paused')
+                .trigger('finished');
+        }
+    });
+
+    $('#player-{{ entry.xid }} a.play').click(function () {
+        $(this).blur();
+
+        var snd = soundManager.getSoundById('sound-{{ entry.xid }}');
+        if (snd.playState == 0) {
+            $('.statusbar .position').css({width: 0});
+            soundManager.stopAll();
+            snd.play();
+        }
+        else if (snd.paused) {
+            snd.resume();
+        }
+        else {
+            snd.pause();
+        }
+
+        return false;
+    }).removeClass('disabled');
+});
+</script>

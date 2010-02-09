@@ -5,18 +5,25 @@ from django.http import HttpResponse
 from templateresponse import TemplateResponse
 import typepad
 from typepadapp.caching import CacheInvalidator
+from typepadapp.models import Asset
 
 
 def audio_events_from_events(events):
     for event in events:
-        obj = event.object
-        if obj is None:
+        asset = event.object
+        audio = audio_from_asset(asset)
+        if audio is None:
             continue
-        if obj.object_type != 'tag:api.typepad.com,2009:Audio':
-            continue
-        for audio in obj.links['rel__enclosure']:
-            yield audio, event
-            break  # only need the first
+        yield audio, event
+
+
+def audio_from_asset(asset):
+    if asset is None:
+        return
+    if asset.object_type != 'tag:api.typepad.com,2009:Audio':
+        return
+    for audio in asset.links['rel__enclosure']:
+        return audio
 
 
 def home(request):
@@ -27,6 +34,19 @@ def home(request):
     return TemplateResponse(request, 'sixaphone/home.html', {
         'events': events,
         'audio_events': list(audio_events_from_events(events)),
+    })
+
+
+def entry(request, xid):
+    with typepad.client.batch_request():
+        request.user = get_user(request)
+        entry = Asset.get_by_url_id(xid)
+        favs = entry.favorites
+
+    return TemplateResponse(request, 'sixaphone/entry.html', {
+        'entry': entry,
+        'audio': audio_from_asset(entry),
+        'favorites': favs,
     })
 
 
