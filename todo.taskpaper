@@ -1,7 +1,4 @@
-- fix timestamps into Pacific timezone @done
-- use randomly selected colors for progress bars @done
-- favoriting
 - tagging
 - tag views
-- permalink pages
-- protect new_post view
+- put agi-bin script in source control
+- phone tree
