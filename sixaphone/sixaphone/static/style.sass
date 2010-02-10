@@ -80,6 +80,19 @@ h1
         &:active
             +buttongradient(#eee, #ccc)
 
+    .button-favorite a
+        +buttongradient(#fff, #ccc)
+        color: black
+        text-shadow: 0 1px 1px #fff
+        +boxshadow(0 1px 2px #000)
+
+        &:hover
+            +buttongradient(#eee, #bbb)
+
+        &:active
+            +buttongradient(#bbb, #eee)
+            +boxshadow(#000 0 0px 0px)
+
 .player, .player-box
     position: relative
     padding: 10px
@@ -123,8 +136,16 @@ h1
             +boxshadow(0 1px 2px #ccc)
 
     .data
+        display: inline-block
+        float: right
         margin-top: 10px
         text-align: right
+
+    .favorite
+        display: inline-block
+        float: left
+        margin-top: 10px
+        text-align: left
 
 .player-2
     .statusbar

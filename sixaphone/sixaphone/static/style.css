@@ -84,6 +84,32 @@ h1 {
       background-image: -webkit-gradient(linear, left top, left bottom, from(#eeeeee), to(#cccccc));
       background-image: -moz-linear-gradient(#eeeeee, #cccccc);
       filter: progid:DXImageTransform.Microsoft.gradient(enabled='true', startColorstr=#eeeeee, endColorstr=#cccccc, GradientType=0); }
+  .tp-button .button-favorite a {
+    border-color: #cccccc;
+    background-color: #cccccc;
+    background-image: -webkit-gradient(linear, left top, left bottom, from(white), to(#cccccc));
+    background-image: -moz-linear-gradient(white, #cccccc);
+    filter: progid:DXImageTransform.Microsoft.gradient(enabled='true', startColorstr=white, endColorstr=#cccccc, GradientType=0);
+    color: black;
+    text-shadow: 0 1px 1px #fff;
+    box-shadow: 0 1px 2px black;
+    -moz-box-shadow: 0 1px 2px black;
+    -webkit-box-shadow: 0 1px 2px black; }
+    .tp-button .button-favorite a:hover {
+      border-color: #bbbbbb;
+      background-color: #bbbbbb;
+      background-image: -webkit-gradient(linear, left top, left bottom, from(#eeeeee), to(#bbbbbb));
+      background-image: -moz-linear-gradient(#eeeeee, #bbbbbb);
+      filter: progid:DXImageTransform.Microsoft.gradient(enabled='true', startColorstr=#eeeeee, endColorstr=#bbbbbb, GradientType=0); }
+    .tp-button .button-favorite a:active {
+      border-color: #eeeeee;
+      background-color: #eeeeee;
+      background-image: -webkit-gradient(linear, left top, left bottom, from(#bbbbbb), to(#eeeeee));
+      background-image: -moz-linear-gradient(#bbbbbb, #eeeeee);
+      filter: progid:DXImageTransform.Microsoft.gradient(enabled='true', startColorstr=#bbbbbb, endColorstr=#eeeeee, GradientType=0);
+      box-shadow: black 0 0px 0px;
+      -moz-box-shadow: black 0 0px 0px;
+      -webkit-box-shadow: black 0 0px 0px; }
 
 .player, .player-box {
   position: relative;
@@ -125,8 +151,15 @@ h1 {
       -moz-box-shadow: 0 1px 2px #cccccc;
       -webkit-box-shadow: 0 1px 2px #cccccc; }
   .player .data {
+    display: inline-block;
+    float: right;
     margin-top: 10px;
     text-align: right; }
+  .player .favorite {
+    display: inline-block;
+    float: left;
+    margin-top: 10px;
+    text-align: left; }
 
 .player-2 .statusbar .position {
   background: #b51890; }

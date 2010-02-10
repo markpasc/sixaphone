@@ -18,11 +18,19 @@
 
     <br class="clear">
 
+    <div class="favorite">
+        <span class="tp-button"><span class="button button-favorite">
+            <a href="#">Mark a favorite</a>
+        </span></span>
+    </div>
+
     <div class="data">
         <a href="{% url entry xid=entry.xid %}" class="when">{{ entry.published|localtime:"America/Los_Angeles"|date:"g:i" }}
             <span class="ampm">{{ entry.published|localtime:"America/Los_Angeles"|date:"A" }}</span>
             {{ entry.published|localtime:"America/Los_Angeles"|date:"j F Y" }}</a>
     </div>
+
+    <br class="clear">
 
 </div>
 
