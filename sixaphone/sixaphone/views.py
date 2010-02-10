@@ -1,9 +1,12 @@
 from __future__ import with_statement
 
 import functools
+import hashlib
+import hmac
 import logging
 import re
 
+from django.conf import settings
 from django.contrib.auth import get_user
 from django.core.cache import cache
 from django.http import HttpResponse
@@ -154,7 +157,16 @@ def new_post(request):
     if request.method != 'POST':
         return HttpResponse('POST required', status=400, content_type='text/plain')
 
-    # TODO: anything to keep just anyone from poking this endpoint
+    # Since we're just protecting against cache misses, do something pretty
+    # simple to protect this endpoint.
+    signer = hmac.new(settings.SECRET_KEY, digestmod=hashlib.sha1)
+    signer.update(request.POST['timestamp'])
+    signer.update(request.POST['squib'])
+    expected = signer.hexdigest()
+
+    sign = request.POST['sign']
+    if sign != expected:
+        return HttpResponse('Invalid signature :(', status=400, content_type='text/plain')
 
     CacheInvalidator(key=request.group.events)(None)
     return HttpResponse('OK', content_type='text/plain')

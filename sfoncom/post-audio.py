@@ -3,12 +3,20 @@
 from __future__ import with_statement
 
 from cgi import parse_qs
+from datetime import datetime
+import hashlib
+import hmac
 import logging
 import mimetypes
 from optparse import OptionParser
+from random import choice
+import shutil
+import string
 import sys
+from urllib import urlencode
 from urlparse import urlparse
 
+import httplib2
 from oauth.oauth import OAuthConsumer, OAuthToken
 import typepad
 import typepad.api
@@ -51,6 +59,29 @@ def post_to_typepad(bodyfile, content_type):
     log.info('New asset is %s', loc)
 
 
+def ping_website(url):
+    timestamp = datetime.utcnow().isoformat()
+    squib = ''.join(choice(string.letters + string.digits) for i in range(10))
+
+    sign = hmac.new(local_settings.SECRET_KEY, digestmod=hashlib.sha1)
+    sign.update(timestamp)
+    sign.update(squib)
+
+    body = urlencode({
+        'timestamp': timestamp,
+        'squib': squib,
+        'sign': sign.hexdigest(),
+    })
+
+    h = httplib2.Http()
+    resp, content = h.request(method='POST', uri=url, body=body)
+    if resp.status == 200:
+        log.info('Server said yay!')
+    else:
+        log.warning('When touching the server, got response %d: %s',
+            resp.status, content)
+
+
 def upload_audio(opts, filename):
     if filename.endswith('.mp3'):
         content_type = 'audio/mp3'
@@ -62,7 +93,13 @@ def upload_audio(opts, filename):
     with open(filename) as audio:
         post_to_typepad(audio, content_type)
 
-    # TODO: Tell sixaphone a post was posted (so the caches are invalidated).
+    # Move the file, if asked.
+    if opts.moveto is not None:
+        shutil.move(filename, opts.moveto)
+
+    # Tell sixaphone a post was posted (so the caches are invalidated).
+    if opts.url is not None:
+        ping_website(opts.url)
 
 
 def main(argv=None):
@@ -77,6 +114,11 @@ def main(argv=None):
         parser.values.verbose -= 1
     parser.add_option('-q', '--quiet', action="callback", callback=quiet,
         help="be less chatty (stackable)")
+
+    parser.add_option('--moveto', dest="moveto", action="store",
+        default=None, help="After uploading, move the file here (optional)")
+    parser.add_option('--url', dest="url", action="store",
+        default=None, help="After uploading, touch a server at this URL")
 
     opts, args = parser.parse_args()
 
