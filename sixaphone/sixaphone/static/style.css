@@ -91,10 +91,15 @@ h1 {
     background-image: -moz-linear-gradient(white, #cccccc);
     filter: progid:DXImageTransform.Microsoft.gradient(enabled='true', startColorstr=white, endColorstr=#cccccc, GradientType=0);
     color: black;
+    text-align: center;
     text-shadow: 0 1px 1px #fff;
     box-shadow: 0 1px 2px black;
     -moz-box-shadow: 0 1px 2px black;
     -webkit-box-shadow: 0 1px 2px black; }
+    .tp-button .button-favorite a span {
+      padding: 0; }
+    .tp-button .button-favorite a .favorited-text {
+      display: none; }
     .tp-button .button-favorite a:hover {
       border-color: #bbbbbb;
       background-color: #bbbbbb;
@@ -110,6 +115,31 @@ h1 {
       box-shadow: black 0 0px 0px;
       -moz-box-shadow: black 0 0px 0px;
       -webkit-box-shadow: black 0 0px 0px; }
+    .tp-button .button-favorite a.favorited {
+      border-color: #ffcccc;
+      background-color: #ffcccc;
+      background-image: -webkit-gradient(linear, left top, left bottom, from(white), to(#ffcccc));
+      background-image: -moz-linear-gradient(white, #ffcccc);
+      filter: progid:DXImageTransform.Microsoft.gradient(enabled='true', startColorstr=white, endColorstr=#ffcccc, GradientType=0);
+      box-shadow: black 0 0px 0px;
+      -moz-box-shadow: black 0 0px 0px;
+      -webkit-box-shadow: black 0 0px 0px; }
+      .tp-button .button-favorite a.favorited .action-text {
+        display: none; }
+      .tp-button .button-favorite a.favorited .favorited-text {
+        display: inline; }
+      .tp-button .button-favorite a.favorited:hover {
+        border-color: #ffcccc;
+        background-color: #ffcccc;
+        background-image: -webkit-gradient(linear, left top, left bottom, from(white), to(#ffcccc));
+        background-image: -moz-linear-gradient(white, #ffcccc);
+        filter: progid:DXImageTransform.Microsoft.gradient(enabled='true', startColorstr=white, endColorstr=#ffcccc, GradientType=0); }
+      .tp-button .button-favorite a.favorited:active {
+        border-color: white;
+        background-color: white;
+        background-image: -webkit-gradient(linear, left top, left bottom, from(#ffcccc), to(white));
+        background-image: -moz-linear-gradient(#ffcccc, white);
+        filter: progid:DXImageTransform.Microsoft.gradient(enabled='true', startColorstr=#ffcccc, endColorstr=white, GradientType=0); }
 
 .player, .player-box {
   position: relative;

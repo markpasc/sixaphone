@@ -83,8 +83,15 @@ h1
     .button-favorite a
         +buttongradient(#fff, #ccc)
         color: black
+        text-align: center
         text-shadow: 0 1px 1px #fff
         +boxshadow(0 1px 2px #000)
+
+        span
+            padding: 0
+
+        .favorited-text
+            display: none
 
         &:hover
             +buttongradient(#eee, #bbb)
@@ -92,6 +99,20 @@ h1
         &:active
             +buttongradient(#bbb, #eee)
             +boxshadow(#000 0 0px 0px)
+
+        &.favorited
+            +buttongradient(#fff, #fcc)
+            +boxshadow(#000 0 0px 0px)
+
+            .action-text
+                display: none
+            .favorited-text
+                display: inline
+
+            &:hover
+                +buttongradient(#fff, #fcc)
+            &:active
+                +buttongradient(#fcc, #fff)
 
 .player, .player-box
     position: relative

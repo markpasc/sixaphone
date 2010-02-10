@@ -20,7 +20,7 @@
 
     <div class="favorite">
         <span class="tp-button"><span class="button button-favorite">
-            <a href="#">Mark a favorite</a>
+            <a href="{{ entry.xid }}" class="favorite"><span class="action-text">Mark a favorite</span><span class="favorited-text">A favorite!</span></a>
         </span></span>
     </div>
 
@@ -35,6 +35,20 @@
 </div>
 
 <script type="text/javascript">
+$('#player-{{ entry.xid }} a.favorite').click(function () {
+    var heart = $(this);
+    if (!heart.hasClass('favorited')) {
+        $.post('{% url favorite %}', {
+            'action': 'favorite',
+            'asset_id': heart.attr('href')
+        }, function () {
+            heart.addClass('favorited');
+        });
+    }
+    heart.blur();
+    return false;
+});
+
 $('#player-{{ entry.xid }} a.play').click(function () {
     return false;
 });
