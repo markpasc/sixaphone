@@ -10,6 +10,6 @@
             <a href="{{ user.typepad_url }}"><img src="{{ user.links.rel__avatar.maxwidth__50.href }}"></a> <a href="{{ user.typepad_url }}">{{ user.display_name }}</a> saved this post as a favorite
         {% endwith %}
     </p>
-    {% endif %}
+    {% endfor %}
 
 {% endblock %}
