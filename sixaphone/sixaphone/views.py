@@ -83,7 +83,7 @@ def asset_meta(request, fresh=False):
     favs = None if fresh else cache.get(cache_key)
 
     if favs is None:
-        log.debug("Oops, going to server for %s's asset_meta", request.user.preferred_username)
+        log.debug("Oops, going to server for %s's asset_meta", request.user.xid)
 
         fav_objs = {}
         html_ids = request.POST.getlist('asset_id')
@@ -98,7 +98,7 @@ def asset_meta(request, fresh=False):
         if not fresh:
             cache.set(cache_key, favs, ONE_DAY)
     else:
-        log.debug('Yay, returning asset_meta for %s from cache', request.user.preferred_username)
+        log.debug('Yay, returning asset_meta for %s from cache', request.user.xid)
 
     favs = dict((html_id, {"favorite": True}) for html_id in favs)
     return HttpResponse(json.dumps(favs), content_type='application/json')
