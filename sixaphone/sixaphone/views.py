@@ -45,13 +45,22 @@ def audio_from_asset(asset):
         return audio
 
 
-def home(request):
+def home(request, page=1):
+    page = int(page)
+    start_index = page * 10 + 1
+    max_results = 10
+
     with typepad.client.batch_request():
         request.user = get_user(request)
-        events = request.group.events
+        events = request.group.events.filter(max_results=max_results, start_index=start_index)
 
     return TemplateResponse(request, 'sixaphone/home.html', {
         'events': events,
+        'page': page,
+        'prev_page': page - 1 if page > 1 else False,
+        'next_page': page + 1 if start_index + max_results < events.total_results else False,
+        'stardex': start_index + max_results,
+        'totresu': events.total_results,
         'audio_events': list(audio_events_from_events(events)),
     })
 

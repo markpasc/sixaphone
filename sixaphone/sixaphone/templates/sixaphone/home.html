@@ -50,4 +50,23 @@
         {% endwith %}
     {% endfor %}
 
+    <p id="page">
+        {% if prev_page %}
+            {% ifequal page 2 %}
+                {% url home as prev_url %}
+            {% else %}
+                {% url archive page=prev_page as prev_url %}
+            {% endifequal %}
+            <a href="{{ prev_url }}" class="arrow">&larr;</a>
+            <a href="{{ prev_url }}">Previous</a>
+        {% endif %}
+        {% if prev_page and next_page %}
+            &middot;
+        {% endif %}
+        {% if next_page %}
+            <a href="{% url archive page=next_page %}">Older</a>
+            <a href="{% url archive page=next_page %}" class="arrow">&rarr;</a>
+        {% endif %}
+    </p>
+
 {% endblock %}

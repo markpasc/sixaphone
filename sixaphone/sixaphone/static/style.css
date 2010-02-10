@@ -246,3 +246,14 @@ h1 {
 .favorites img {
   vertical-align: middle;
   width: 2em; }
+
+#page {
+  font-size: 1.5em;
+  line-height: 1em;
+  text-align: center;
+  margin: 2em 0; }
+
+a.arrow:link, a.arrow:visited, a.arrow:active {
+  text-decoration: none; }
+a.arrow:hover {
+  text-decoration: underline; }
