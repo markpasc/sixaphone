@@ -13,9 +13,34 @@
             '{{ event.xid }}'
             {% if forloop.last %}{% else %},{% endif %}
         {% endfor %} ];
+
+        var asset_ids = [ {% for audio, event in audio_events %}
+            'asset-{{ event.object.xid }}'
+            {% if forloop.last %}{% else %},{% endif %}
+        {% endfor %} ];
+
+        $(document).ready(function () {
+            $.ajax({
+                url: '{% url asset_meta %}',
+                type: "POST",
+                data: {"asset_id": asset_ids},
+                dataType: "json",
+                traditional: true,
+                success: function(data) {
+                    $.each(data, function (key, val) {
+                        if (val.favorite) {
+                            key = key.replace(/^asset-/, '');
+                            $('#favorite-' + key).addClass('favorited');
+                        }
+                    });
+                }
+            });
+        });
+
         $('#play-all a').click(function () {
             return false;
         });
+
         soundManager.onready(function (status) {
             if (!status.success)
                 return;
@@ -44,11 +69,13 @@
         });
     </script>
 
+    <div id="players">
     {% for audio, event in audio_events %}
         {% with event.object as entry %}
             {% include "sixaphone/player.html" %}
         {% endwith %}
     {% endfor %}
+    </div>
 
     <p id="page">
         {% if prev_page %}
