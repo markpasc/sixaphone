@@ -1,0 +1,27 @@
+#!/usr/bin/perl
+
+use strict;
+use Asterisk::AGI;
+use LWP::Simple;
+
+use constant POST_TIME_LIMIT => 5 * 60;    # seconds
+
+my $AGI = Asterisk::AGI->new;
+my %input = $AGI->ReadParse;
+
+my $basename = sprintf("/var/local/sixaphone/%d", time());
+
+my $shutdown_callback = sub {
+    system('lame', '--resample', '16', "$basename.wav", "$basename.mp3");
+    unlink("$basename.wav");
+    exit 0;
+};
+
+$AGI->setcallback($shutdown_callback);
+$SIG{HUP} = $shutdown_callback;
+$SIG{PIPE} = $shutdown_callback;
+
+my $record_options = sprintf("%s.wav,0,%d,k", $basename, POST_TIME_LIMIT);
+$AGI->exec('Record', $record_options);
+$shutdown_callback->();
+
