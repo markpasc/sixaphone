@@ -54,7 +54,7 @@ def audio_from_asset(asset):
 
 def home(request, page=1):
     page = int(page)
-    start_index = page * 10 + 1
+    start_index = (page - 1) * 10 + 1
     max_results = 10
 
     with typepad.client.batch_request():
