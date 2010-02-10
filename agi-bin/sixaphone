@@ -21,7 +21,19 @@ $AGI->setcallback($shutdown_callback);
 $SIG{HUP} = $shutdown_callback;
 $SIG{PIPE} = $shutdown_callback;
 
+# Let the user put the phone to their head first.
+sleep 2;
+
+$AGI->stream_file('vm-intro', '#');
+
 my $record_options = sprintf("%s.wav,0,%d,k", $basename, POST_TIME_LIMIT);
 $AGI->exec('Record', $record_options);
+
+$AGI->stream_file('vm-msgsaved', '#');
+$AGI->stream_file('vm-goodbye', '#');
+
+# Don't hang up immediately.
+sleep 10;
+
 $shutdown_callback->();
 
