@@ -17,6 +17,8 @@ from typepadapp.caching import CacheInvalidator
 from typepadapp.models import Asset, Favorite
 import typepadapp.signals
 
+from sixaphone.models import Tag
+
 
 log = logging.getLogger(__name__)
 
@@ -61,6 +63,23 @@ def home(request, page=1):
         request.user = get_user(request)
         events = request.group.events.filter(max_results=max_results, start_index=start_index)
 
+    audio_events = list(audio_events_from_events(events))
+
+    xids = list()
+    event_with_xid = dict()
+    for audio, event in audio_events:
+        xid = event.object.xid
+        xids.append(xid)
+        event_with_xid[xid] = event
+
+    tags = Tag.objects.filter(asset__in=xids)
+    for tag in tags:
+        asset = event_with_xid[tag.asset].object
+        try:
+            asset.tags.append(tag)
+        except AttributeError:
+            asset.tags = [tag]
+
     return TemplateResponse(request, 'sixaphone/home.html', {
         'events': events,
         'page': page,
@@ -68,7 +87,7 @@ def home(request, page=1):
         'next_page': page + 1 if start_index + max_results < events.total_results else False,
         'stardex': start_index + max_results,
         'totresu': events.total_results,
-        'audio_events': list(audio_events_from_events(events)),
+        'audio_events': audio_events,
     })
 
 
@@ -115,6 +134,10 @@ def entry(request, xid):
         'audio': audio_from_asset(entry),
         'favorites': favs,
     })
+
+
+def tag(request, tag):
+    raise NotImplementedError
 
 
 @oops

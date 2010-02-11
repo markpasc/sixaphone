@@ -18,6 +18,14 @@
 
     <br class="clear">
 
+    {% for tag in entry.tags %}
+    {% if forloop.first %}<div class="tags">{% endif %}
+        <a href="{% url tag tag=tag.tag %}" title="tagged by {{ tag.by_name }}">{{ tag.tag }}</a>
+    {% if forloop.last %}</div>{% endif %}
+    {% endfor %}
+
+    <br class="clear">
+
     <div class="favorite">
         <span class="tp-button"><span class="button button-favorite">
             <a href="{{ entry.xid }}" id="favorite-{{ entry.xid }}" class="favorite"><span class="action-text">Mark a favorite</span><span class="favorited-text">A favorite!</span></a>
@@ -28,6 +36,13 @@
         <a href="{% url entry xid=entry.xid %}" class="when">{{ entry.published|localtime:"America/Los_Angeles"|date:"g:i" }}
             <span class="ampm">{{ entry.published|localtime:"America/Los_Angeles"|date:"A" }}</span>
             {{ entry.published|localtime:"America/Los_Angeles"|date:"j F Y" }}</a>
+    </div>
+
+    <div class="add-tag">
+        <input id="input-add-tag">
+        <span class="tp-button"><span class="button button-add-tag">
+            <a href="{{ entry.xid }}">Add tag</a>
+        </span></span>
     </div>
 
     <br class="clear">

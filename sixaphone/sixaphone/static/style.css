@@ -185,16 +185,23 @@ h1 {
       box-shadow: 0 1px 2px #cccccc;
       -moz-box-shadow: 0 1px 2px #cccccc;
       -webkit-box-shadow: 0 1px 2px #cccccc; }
+  .player .tags {
+    margin: 10px 0 0 0; }
+    .player .tags .tag {
+      display: inline; }
   .player .data {
     display: inline-block;
     float: right;
-    margin-top: 10px;
+    margin: 10px 0 0 10px;
     text-align: right; }
   .player .favorite {
     display: inline-block;
     float: left;
-    margin-top: 10px;
+    margin: 10px 10px 0 0;
     text-align: left; }
+  .player .add-tag {
+    margin: 10px 0 0 0;
+    text-align: center; }
 
 .player-2 .statusbar .position {
   background: #b51890; }
