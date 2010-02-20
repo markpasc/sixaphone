@@ -36,13 +36,12 @@ def oops(fn):
     return hoops
 
 
-def audio_events_from_events(events):
-    for event in events:
-        asset = event.object
-        audio = audio_from_asset(asset)
+def audio_entries_from_entries(entries):
+    for entry in entries:
+        audio = audio_from_asset(entry)
         if audio is None:
             continue
-        yield audio, event
+        yield audio, entry
 
 
 def audio_from_asset(asset):
@@ -54,6 +53,23 @@ def audio_from_asset(asset):
         return audio
 
 
+def add_tags_to_entries(audio_entries):
+    xids = list()
+    entry_with_xid = dict()
+    for audio, entry in audio_entries:
+        xid = entry.xid
+        xids.append(xid)
+        entry_with_xid[xid] = entry
+
+    tags = Tag.objects.filter(asset__in=xids)
+    for tag in tags:
+        asset = entry_with_xid[tag.asset]
+        try:
+            asset.tags.append(tag)
+        except AttributeError:
+            asset.tags = [tag]
+
+
 def home(request, page=1):
     page = int(page)
     start_index = (page - 1) * 10 + 1
@@ -63,31 +79,17 @@ def home(request, page=1):
         request.user = get_user(request)
         events = request.group.events.filter(max_results=max_results, start_index=start_index)
 
-    audio_events = list(audio_events_from_events(events))
-
-    xids = list()
-    event_with_xid = dict()
-    for audio, event in audio_events:
-        xid = event.object.xid
-        xids.append(xid)
-        event_with_xid[xid] = event
-
-    tags = Tag.objects.filter(asset__in=xids)
-    for tag in tags:
-        asset = event_with_xid[tag.asset].object
-        try:
-            asset.tags.append(tag)
-        except AttributeError:
-            asset.tags = [tag]
+    audio_entries = list(audio_entries_from_entries(event.object for event
+        in events if event.object))
+    add_tags_to_entries(audio_entries)
 
     return TemplateResponse(request, 'sixaphone/home.html', {
-        'events': events,
         'page': page,
         'prev_page': page - 1 if page > 1 else False,
         'next_page': page + 1 if start_index + max_results < events.total_results else False,
         'stardex': start_index + max_results,
         'totresu': events.total_results,
-        'audio_events': audio_events,
+        'audio_entries': audio_entries,
     })
 
 
@@ -136,8 +138,29 @@ def entry(request, xid):
     })
 
 
-def tag(request, tag):
-    raise NotImplementedError
+def tag(request, tag, page=1):
+    page = int(page)
+    first = (page - 1) * 10
+    last = first + 10 + 1
+
+    tags = Tag.objects.filter(tag=tag).order_by('-created')[first:last]
+    has_next_page = True if len(tags) > 10 else False
+    tags = tags[:10]
+
+    with typepad.client.batch_request():
+        request.user = get_user(request)
+        assets = [Asset.get_by_url_id(tagject.asset) for tagject in tags]
+
+    audio_entries = list(audio_entries_from_entries(assets))
+    add_tags_to_entries(audio_entries)
+
+    return TemplateResponse(request, 'sixaphone/tag.html', {
+        'audio_entries': audio_entries,
+        'tag': tag,
+        'page': page,
+        'prev_page': page - 1 if page > 1 else False,
+        'next_page': page + 1 if len(tags) > 10 else False,
+    })
 
 
 @oops

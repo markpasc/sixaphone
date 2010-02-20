@@ -9,13 +9,13 @@
     </div>
 
     <script type="text/javascript">
-        var xids = [ {% for audio, event in audio_events %}
-            '{{ event.xid }}'
+        var xids = [ {% for audio, entry in audio_entries %}
+            '{{ entry.xid }}'
             {% if forloop.last %}{% else %},{% endif %}
         {% endfor %} ];
 
-        var asset_ids = [ {% for audio, event in audio_events %}
-            'asset-{{ event.object.xid }}'
+        var asset_ids = [ {% for audio, entry in audio_entries %}
+            'asset-{{ entry.xid }}'
             {% if forloop.last %}{% else %},{% endif %}
         {% endfor %} ];
 
@@ -49,11 +49,11 @@
                 $.each(xids, function (i, val) {
                     if (i < xids.length - 1) {
                         $('#player-' + val).one('finished', function () {
-                            soundManager.load('event-' + xids[i + 1]);
+                            soundManager.load('sound-' + xids[i + 1]);
                             $('#player-' + xids[i + 1]).delay(1000).queue(function () {
                                 $('.statusbar .position').css({width: 0});
                                 soundManager.stopAll();
-                                soundManager.play('event-' + xids[i + 1]);
+                                soundManager.play('sound-' + xids[i + 1]);
                                 $(this).dequeue();
                             });
                         });
@@ -62,7 +62,7 @@
 
                 $('.statusbar .position').css({width: 0});
                 soundManager.stopAll();
-                soundManager.play('event-' + xids[0]);
+                soundManager.play('sound-' + xids[0]);
 
                 return false;
             }).removeClass('disabled');
@@ -70,10 +70,9 @@
     </script>
 
     <div id="players">
-    {% for audio, event in audio_events %}
-        {% with event.object as entry %}
-            {% include "sixaphone/player.html" %}
-        {% endwith %}
+    {% for audio, entry in audio_entries %}
+        <!-- hi entry {{ entry }} -->
+        {% include "sixaphone/player.html" %}
     {% endfor %}
     </div>
 
