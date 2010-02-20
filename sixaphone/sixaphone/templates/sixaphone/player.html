@@ -26,11 +26,13 @@
 
     <br class="clear">
 
+    {% if user.is_authenticated %}
     <div class="favorite">
         <span class="tp-button"><span class="button button-favorite">
             <a href="{{ entry.xid }}" id="favorite-{{ entry.xid }}" class="favorite"><span class="action-text">Mark a favorite</span><span class="favorited-text">A favorite!</span></a>
         </span></span>
     </div>
+    {% endif %}
 
     <div class="data">
         <a href="{% url entry xid=entry.xid %}" class="when">{{ entry.published|localtime:"America/Los_Angeles"|date:"g:i" }}
@@ -38,18 +40,21 @@
             {{ entry.published|localtime:"America/Los_Angeles"|date:"j F Y" }}</a>
     </div>
 
+    {% if user.is_authenticated %}
     <div class="add-tag">
         <input id="input-add-tag">
         <span class="tp-button"><span class="button button-add-tag">
             <a href="{{ entry.xid }}">Add tag</a>
         </span></span>
     </div>
+    {% endif %}
 
     <br class="clear">
 
 </div>
 
 <script type="text/javascript">
+{% if user.is_authenticated %}
 $('#player-{{ entry.xid }} a.favorite').click(function () {
     var heart = $(this);
     if (!heart.hasClass('favorited')) {
@@ -63,6 +68,7 @@ $('#player-{{ entry.xid }} a.favorite').click(function () {
     heart.blur();
     return false;
 });
+{% endif %}
 
 $('#player-{{ entry.xid }} a.play').click(function () {
     return false;
