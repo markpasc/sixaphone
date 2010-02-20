@@ -18,11 +18,11 @@
 
     <br class="clear">
 
+    <div id="tags-{{ entry.xid }}" class="tags">
     {% for tag in entry.tags %}
-    {% if forloop.first %}<div class="tags">{% endif %}
         <a href="{% url tag tag=tag.tag %}" title="tagged by {{ tag.by_name }}">{{ tag.tag }}</a>
-    {% if forloop.last %}</div>{% endif %}
     {% endfor %}
+    </div>
 
     <br class="clear">
 
@@ -42,9 +42,9 @@
 
     {% if user.is_authenticated %}
     <div class="add-tag">
-        <input id="input-add-tag">
+        <input id="input-add-tag-{{ entry.xid }}">
         <span class="tp-button"><span class="button button-add-tag">
-            <a href="{{ entry.xid }}">Add tag</a>
+            <a href="{{ entry.xid }}" id="add-tag-{{ entry.xid }}" class="add-tag">Add tag</a>
         </span></span>
     </div>
     {% endif %}
@@ -55,7 +55,7 @@
 
 <script type="text/javascript">
 {% if user.is_authenticated %}
-$('#player-{{ entry.xid }} a.favorite').click(function () {
+$('#favorite-{{ entry.xid }}').click(function () {
     var heart = $(this);
     if (!heart.hasClass('favorited')) {
         $.post('{% url favorite %}', {
@@ -66,6 +66,29 @@ $('#player-{{ entry.xid }} a.favorite').click(function () {
         });
     }
     heart.blur();
+    return false;
+});
+
+$('#add-tag-{{ entry.xid }}').click(function () {
+    var addend = $(this);
+    var input = $('#input-add-tag-{{ entry.xid }}');
+    input.attr('disabled', 'disabled');
+    $.post('{% url add_tags %}', {
+        'action': 'add',
+        'asset_id': addend.attr('href'),
+        'tags': input.val()
+    }, function (data, status) {
+        input.attr('disabled', '');
+        input.val('');
+        $.each(data, function(i, val) {
+            var newtag = $('<a/>');
+            newtag.attr('href', '{% url tag tag="TAGTAGTAG" %}'.replace('TAGTAGTAG', val.tag));
+            newtag.attr('title', 'tagged by ' + val.name);
+            newtag.text(val.tag);
+            $('#tags-{{ entry.xid }}').append(newtag);
+        });
+    });
+    addend.blur();
     return false;
 });
 {% endif %}

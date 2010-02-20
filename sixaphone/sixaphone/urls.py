@@ -7,6 +7,7 @@ urlpatterns = patterns('',
     url(r'^tag/(?P<tag>[^/]+)$', 'sixaphone.views.tag', name='tag'),
 
     url(r'^favorite$', 'sixaphone.views.favorite', name='favorite'),
+    url(r'^add_tags$', 'sixaphone.views.add_tags', name='add_tags'),
     url(r'^asset_meta$', 'sixaphone.views.asset_meta', name='asset_meta'),
     url(r'^new_post$', 'sixaphone.views.new_post'),
 )

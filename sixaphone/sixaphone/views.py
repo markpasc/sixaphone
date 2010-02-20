@@ -144,6 +144,8 @@ def tag(request, tag):
 def favorite(request):
     if request.method != 'POST':
         return HttpResponse('POST required at this url', status=400, content_type='text/plain')
+    if not request.user.is_authenticated():
+        return HttpResponse('silly rabbit, only signed-in folks can favorite', status=400, content_type='text/plain')
 
     action = request.POST.get('action', 'favorite')
     asset_id = request.POST.get('asset_id', '')
@@ -164,6 +166,41 @@ def favorite(request):
         group=request.group)
 
     return HttpResponse('OK', content_type='text/plain')
+
+
+@oops
+def add_tags(request):
+    if request.method != 'POST':
+        return HttpResponse('POST required at this url', status=400, content_type='text/plain')
+    if not request.user.is_authenticated():
+        return HttpResponse('silly rabbit, only signed-in folks can add tags', status=400, content_type='text/plain')
+
+    action = request.POST.get('action', 'add')
+    asset_id = request.POST.get('asset_id', '')
+    tags = request.POST.get('tags', '')
+    try:
+        (asset_id,) = re.findall('6a\w+', asset_id)
+    except TypeError:
+        raise Http404
+
+    if action != 'add':
+        return HttpResponse('Unsupported action %r' % action, status=400, content_type='text/plain')
+    if not tags:
+        return HttpResponse('Unsupported tags %r' % tags, status=400, content_type='text/plain')
+
+    with typepad.client.batch_request():
+        request.user = get_user(request)
+    xid = request.user.xid
+    by_name = request.user.display_name
+
+    result = list()
+    for tag in tags.split(','):
+        tag = tag.strip()
+        t = Tag(asset=asset_id, tag=tag, by=xid, by_name=by_name)
+        t.save()
+        result.append({'tag': tag, 'name': by_name})
+
+    return HttpResponse(json.dumps(result), content_type='application/javascript+json')
 
 
 def uncache_favorites(sender, instance, **kwargs):
