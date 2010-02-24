@@ -303,9 +303,10 @@ a.arrow:hover {
 
 #follow {
   position: absolute;
+  left: 30px;
   bottom: 10px;
   background: rgb(233, 242, 247);
-  padding: 1em;
+  padding: 10px;
   box-shadow: #999999 0 1px 2px;
   -moz-box-shadow: #999999 0 1px 2px;
   -webkit-box-shadow: #999999 0 1px 2px;
@@ -329,7 +330,8 @@ a.arrow:hover {
   margin: 0; }
   #footer #footer-content {
     padding: 1.5ex 0;
-    color: white; }
+    color: white;
+    text-align: center; }
     #footer #footer-content img {
       vertical-align: middle; }
     #footer #footer-content .bullet {
