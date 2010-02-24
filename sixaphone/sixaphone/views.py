@@ -131,6 +131,9 @@ def entry(request, xid):
         entry = Asset.get_by_url_id(xid)
         favs = entry.favorites
 
+    audio = audio_from_asset(entry)
+    add_tags_to_entries(((audio, entry),))
+
     return TemplateResponse(request, 'sixaphone/entry.html', {
         'entry': entry,
         'audio': audio_from_asset(entry),
