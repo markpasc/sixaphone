@@ -168,8 +168,42 @@ h1
     .tags
         margin: 10px 0 0 0
 
-        .tag
-            display: inline
+        a
+            display: inline-block
+            position: relative
+            font-size: 12px
+            line-height: 14px
+            height: 14px
+
+            span
+                display: inline-block
+                font-size: 12px
+                line-height: 14px
+                height: 14px
+                padding: 0
+
+            .point
+                width: 6px
+                background: url(tag.png) no-repeat 0px 0px
+                margin-left: 3px
+            .tail
+                position: absolute
+                width: 6px
+                background: url(tag.png) no-repeat -6px 0px
+            .text
+                background: #666
+                padding: 0px 4px
+
+            &:link, &:hover, &:visited, &:active
+                color: white
+                text-decoration: none
+            &:hover
+                .text
+                    background: #66c
+                .point
+                    background-position: 0px -14px
+                .tail
+                    background-position: -6px -14px
 
     .data
         display: inline-block

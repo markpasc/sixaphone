@@ -16,11 +16,15 @@
         </div>
     </div>
 
-    <div id="tags-{{ entry.xid }}" class="tags clearfix{% if not entry.tags %} hidden{% endif %}">
+    <div id="tags-{{ entry.xid }}" class="tags clearfix{% if not entry.tags %} hidden{% endif %}">{% spaceless %}
     {% for tag in entry.tags %}
-        <a href="{% url tag tag=tag.tag %}" title="tagged by {{ tag.by_name }}">{{ tag.tag }}</a>
+        <a href="{% url tag tag=tag.tag %}" title="tagged by {{ tag.by_name }}">
+            <span class="point">&nbsp;</span>
+            <span class="text">{{ tag.tag }}</span>
+            <span class="tail">&nbsp;</span>
+        </a>
     {% endfor %}
-    </div>
+    {% endspaceless %}</div>
 
     {% if user.is_authenticated %}
     <div class="favorite">
@@ -76,10 +80,16 @@ $('#add-tag-{{ entry.xid }}').click(function () {
         input.val('');
         $('#tags-{{ entry.xid }}').show();
         $.each(data, function(i, val) {
-            var newtag = $('<a/>');
-            newtag.attr('href', '{% url tag tag="TAGTAGTAG" %}'.replace('TAGTAGTAG', val.tag));
-            newtag.attr('title', 'tagged by ' + val.name);
-            newtag.text(val.tag);
+            var newtag = $('<a/>')
+                .attr('href', '{% url tag tag="TAGTAGTAG" %}'.replace('TAGTAGTAG', val.tag))
+                .attr('title', 'tagged by ' + val.name);
+            var span = $('<span/>').addClass('point').html('&nbsp;');
+            newtag.append(span);
+            span = $('<span/>').addClass('text').text(val.tag);
+            newtag.append(span);
+            span = $('<span/>').addClass('tail').html('&nbsp;');
+            newtag.append(span);
+
             $('#tags-{{ entry.xid }}').append(newtag);
         });
     });

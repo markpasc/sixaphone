@@ -190,8 +190,38 @@ h1 {
       -webkit-box-shadow: 0 1px 2px #cccccc; }
   .player .tags {
     margin: 10px 0 0 0; }
-    .player .tags .tag {
-      display: inline; }
+    .player .tags a {
+      display: inline-block;
+      position: relative;
+      font-size: 12px;
+      line-height: 14px;
+      height: 14px; }
+      .player .tags a span {
+        display: inline-block;
+        font-size: 12px;
+        line-height: 14px;
+        height: 14px;
+        padding: 0; }
+      .player .tags a .point {
+        width: 6px;
+        background: url(tag.png) no-repeat 0px 0px;
+        margin-left: 3px; }
+      .player .tags a .tail {
+        position: absolute;
+        width: 6px;
+        background: url(tag.png) no-repeat -6px 0px; }
+      .player .tags a .text {
+        background: #666;
+        padding: 0px 4px; }
+      .player .tags a:link, .player .tags a:hover, .player .tags a:visited, .player .tags a:active {
+        color: white;
+        text-decoration: none; }
+      .player .tags a:hover .text {
+        background: #66c; }
+      .player .tags a:hover .point {
+        background-position: 0px -14px; }
+      .player .tags a:hover .tail {
+        background-position: -6px -14px; }
   .player .data {
     display: inline-block;
     float: right;
