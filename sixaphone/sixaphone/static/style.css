@@ -204,12 +204,11 @@ h1 {
         padding: 0; }
       .player .tags a .point {
         width: 6px;
-        background: url(tag.png) no-repeat 0px 0px;
-        margin-left: 3px; }
+        background: url(tag.png) no-repeat 0px 0px; }
       .player .tags a .tail {
-        position: absolute;
         width: 6px;
-        background: url(tag.png) no-repeat -6px 0px; }
+        background: url(tag.png) no-repeat -6px 0px;
+        margin-right: -3px; }
       .player .tags a .text {
         background: #666;
         padding: 0px 4px; }
