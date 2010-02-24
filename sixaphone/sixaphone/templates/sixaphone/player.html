@@ -16,7 +16,7 @@
         </div>
     </div>
 
-    <div id="tags-{{ entry.xid }}" class="tags">
+    <div id="tags-{{ entry.xid }}" class="tags clearfix{% if not entry.tags %} hidden{% endif %}">
     {% for tag in entry.tags %}
         <a href="{% url tag tag=tag.tag %}" title="tagged by {{ tag.by_name }}">{{ tag.tag }}</a>
     {% endfor %}
@@ -74,6 +74,7 @@ $('#add-tag-{{ entry.xid }}').click(function () {
     }, function (data, status) {
         input.attr('disabled', '');
         input.val('');
+        $('#tags-{{ entry.xid }}').show();
         $.each(data, function(i, val) {
             var newtag = $('<a/>');
             newtag.attr('href', '{% url tag tag="TAGTAGTAG" %}'.replace('TAGTAGTAG', val.tag));
