@@ -331,11 +331,17 @@ a.arrow:hover {
   #footer #footer-content {
     padding: 1.5ex 0;
     color: white;
-    text-align: center; }
+    text-align: center;
+    text-shadow: #666 0 1px 1px;
+    font-weight: bold; }
     #footer #footer-content img {
       vertical-align: middle; }
     #footer #footer-content .bullet {
       display: inline-block;
       padding: 0 0.5em; }
+    #footer #footer-content a.invisilink:link, #footer #footer-content a.invisilink:hover, #footer #footer-content a.invisilink:visited, #footer #footer-content a.invisilink:active {
+      text-decoration: none; }
+    #footer #footer-content a.invisilink:hover {
+      text-decoration: underline; }
   #footer a:link, #footer a:hover, #footer a:visited, #footer a:active {
     color: white; }

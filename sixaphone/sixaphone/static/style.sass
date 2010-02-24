@@ -329,6 +329,8 @@ a.arrow
         padding: 1.5ex 0
         color: white
         text-align: center
+        text-shadow: #666 0 1px 1px
+        font-weight: bold
 
         img
             vertical-align: middle
@@ -336,6 +338,12 @@ a.arrow
         .bullet
             display: inline-block
             padding: 0 0.5em
+
+        a.invisilink
+            &:link, &:hover, &:visited, &:active
+                text-decoration: none
+            &:hover
+                text-decoration: underline
 
     a:link, a:hover, a:visited, a:active
         color: white
