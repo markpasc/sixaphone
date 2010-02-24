@@ -34,20 +34,22 @@
     </div>
     {% endif %}
 
-    <div class="data{% if not user.is_authenticated %} clearfix{% endif %}">
+    <div class="data">
         <a href="{% url entry xid=entry.xid %}" class="when">{{ entry.published|localtime:"America/Los_Angeles"|date:"g:i" }}
             <span class="ampm">{{ entry.published|localtime:"America/Los_Angeles"|date:"A" }}</span>
             {{ entry.published|localtime:"America/Los_Angeles"|date:"j F Y" }}</a>
     </div>
 
     {% if user.is_authenticated %}
-    <div class="add-tag clearfix">
+    <div class="add-tag">
         <input id="input-add-tag-{{ entry.xid }}">
         <span class="tp-button"><span class="button button-add-tag">
             <a href="{{ entry.xid }}" id="add-tag-{{ entry.xid }}" class="add-tag">Add tag</a>
         </span></span>
     </div>
     {% endif %}
+
+    <div class="clear"></div>
 
 </div>
 
