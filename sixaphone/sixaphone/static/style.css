@@ -4,6 +4,21 @@
 #content {
   margin-top: 20px; }
 
+#footer {
+  background: #90b518;
+  padding: 0;
+  margin: 0; }
+  #footer #footer-content {
+    padding: 1.5ex 0;
+    color: white; }
+    #footer #footer-content img {
+      vertical-align: middle; }
+    #footer #footer-content .bullet {
+      display: inline-block;
+      padding: 0 0.5em; }
+  #footer a:link, #footer a:hover, #footer a:visited, #footer a:active {
+    color: white; }
+
 .hidden {
   display: none; }
 
