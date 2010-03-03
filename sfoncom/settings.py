@@ -110,6 +110,7 @@ INSTALLED_APPS = (
     'typepadapp',
     'ganalytics',
     'sixaphone',
+    'statical',
 )
 
 from local_settings import *
