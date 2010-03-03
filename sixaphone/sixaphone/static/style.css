@@ -1,5 +1,13 @@
+body, html {
+  height: 100%;
+  margin: 0; }
+
 #bigbox {
-  border-top: 4px solid #90b518; }
+  margin: 0 0 -45px;
+  min-height: 100%; }
+  #bigbox #bigbox-border {
+    border-top: 4px solid #90b518;
+    height: 0; }
 
 #content {
   margin-top: 20px; }
@@ -334,24 +342,28 @@ a.arrow:hover {
     top: 0;
     right: 0; }
 
+#not-a-footer {
+  height: 45px; }
+
 #footer {
   background: #90b518;
+  position: relative;
   padding: 0;
-  margin: 0; }
-  #footer #footer-content {
-    padding: 1.5ex 0;
-    color: white;
-    text-align: center;
-    text-shadow: #666 0 1px 1px;
-    font-weight: bold; }
-    #footer #footer-content img {
-      vertical-align: middle; }
-    #footer #footer-content .bullet {
-      display: inline-block;
-      padding: 0 0.5em; }
-    #footer #footer-content a.invisilink:link, #footer #footer-content a.invisilink:hover, #footer #footer-content a.invisilink:visited, #footer #footer-content a.invisilink:active {
-      text-decoration: none; }
-    #footer #footer-content a.invisilink:hover {
-      text-decoration: underline; }
+  height: 45px;
+  line-height: 45px;
+  overflow: hidden;
+  color: white;
+  text-align: center;
+  text-shadow: #666 0 1px 1px;
+  font-weight: bold; }
+  #footer img {
+    vertical-align: middle; }
+  #footer .bullet {
+    display: inline-block;
+    padding: 0 0.5em; }
+  #footer a.invisilink:link, #footer a.invisilink:hover, #footer a.invisilink:visited, #footer a.invisilink:active {
+    text-decoration: none; }
+  #footer a.invisilink:hover {
+    text-decoration: underline; }
   #footer a:link, #footer a:hover, #footer a:visited, #footer a:active {
     color: white; }

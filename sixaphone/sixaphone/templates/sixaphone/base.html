@@ -35,59 +35,57 @@
 </head><body>
 
     <div id="bigbox">
-    <div id="content" class="container_12 clearfix">
+        <div id="bigbox-border"></div>
+        <div id="content" class="container_12 clearfix">
 
-        <div class="grid_4 prefix_8">
-            <p id="hi">
-            {% if user.is_authenticated %}
-                <span class="hi">Hi, <a href="{{ user.typepad_url }}"><img src="{{ user.links.rel__avatar.maxwidth__50.href }}"></a> <a href="{{ user.typepad_url }}">{{ user.display_name }}</a>!</span>
-                <span class="tp-button"><span class="button button-signout">
-                    <a href="{% url logout %}">Sign out</a>
-                </span></span>
-            {% else %}
-                Hi!
-                <span class="tp-button"><span class="button button-signin">
-                    <a href="{% url login %}">Sign in</a>
-                </span></span>
-                to favorite &amp; tag
-            {% endif %}
-            </p>
-        </div>
-
-        <div class="grid_5">
-            <div id="sm2-ctr-ctr">
-                <div id="sm2-container"></div>
+            <div class="grid_4 prefix_8">
+                <p id="hi">
+                {% if user.is_authenticated %}
+                    <span class="hi">Hi, <a href="{{ user.typepad_url }}"><img src="{{ user.links.rel__avatar.maxwidth__50.href }}"></a> <a href="{{ user.typepad_url }}">{{ user.display_name }}</a>!</span>
+                    <span class="tp-button"><span class="button button-signout">
+                        <a href="{% url logout %}">Sign out</a>
+                    </span></span>
+                {% else %}
+                    Hi!
+                    <span class="tp-button"><span class="button button-signin">
+                        <a href="{% url login %}">Sign in</a>
+                    </span></span>
+                    to favorite &amp; tag
+                {% endif %}
+                </p>
             </div>
 
-            <h1><a href="{% url home %}"><img src="{% url static path="sixaphone/phone.jpg" %}"></a></h1>
-            <h1 class="tk-chippewa-falls"><a href="{% url home %}">Six-A-Phone</a></h1>
-        </div>
+            <div class="grid_5">
+                <div id="sm2-ctr-ctr">
+                    <div id="sm2-container"></div>
+                </div>
 
-        <div class="grid_7">
-            {% block content %}{% endblock %}
-        </div>
+                <h1><a href="{% url home %}"><img src="{% url static path="sixaphone/phone.jpg" %}"></a></h1>
+                <h1 class="tk-chippewa-falls"><a href="{% url home %}">Six-A-Phone</a></h1>
+            </div>
 
-        <div class="grid_5">
-            {% block left_foot %}{% endblock %}
-        </div>
+            <div class="grid_7">
+                {% block content %}{% endblock %}
+            </div>
 
-        <div class="grid_7">
-            {% block right_foot %}{% endblock %}
-        </div>
+            <div class="grid_5">
+                {% block left_foot %}{% endblock %}
+            </div>
 
-    </div>
+            <div class="grid_7">
+                {% block right_foot %}{% endblock %}
+            </div>
+
+        </div>
+        <div id="not-a-footer"></div>
     </div>
 
     <div id="footer">
-        <div class="container_12 clearfix">
-            <div id="footer-content" class="grid_12">
-                <a href="http://en.wikipedia.org/wiki/Dial-A-Song" class="invisilink">Free when you call from work</a>, and you work at Six Apart.
-                <span class="bullet">&#8226;</span>
-                by @<a href="http://markpasc.org/mark/">markpasc</a> &amp; friends
-                <span class="bullet">&#8226;</span>
-                <a href="http://developer.typepad.com/">made with</a> <a href="http://developer.typepad.com/"><img src="{% url static path="sixaphone/typepad.gif" %}"></a>
-            </div>
-        </div>
+        <a href="http://en.wikipedia.org/wiki/Dial-A-Song" class="invisilink">Free when you call from work</a>, and you work at Six Apart.
+        <span class="bullet">&#8226;</span>
+        by @<a href="http://markpasc.org/mark/">markpasc</a> &amp; friends
+        <span class="bullet">&#8226;</span>
+        <a href="http://developer.typepad.com/">made with</a> <a href="http://developer.typepad.com/"><img src="{% url static path="sixaphone/typepad.gif" %}"></a>
     </div>
 
 {% load ganalytics %}

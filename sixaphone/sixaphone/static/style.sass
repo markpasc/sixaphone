@@ -1,5 +1,14 @@
+body, html
+    height: 100%
+    margin: 0
+
 #bigbox
-    border-top: 4px solid #90b518
+    margin: 0 0 -45px
+    min-height: 100%
+
+    #bigbox-border
+        border-top: 4px solid #90b518
+        height: 0
 
 #content
     margin-top: 20px
@@ -331,30 +340,34 @@ a.arrow
         top: 0
         right: 0
 
+#not-a-footer
+    height: 45px
+
 #footer
     background: #90b518
+    position: relative
     padding: 0
-    margin: 0
+    height: 45px
+    line-height: 45px
+    overflow: hidden
 
-    #footer-content
-        padding: 1.5ex 0
-        color: white
-        text-align: center
-        text-shadow: #666 0 1px 1px
-        font-weight: bold
+    color: white
+    text-align: center
+    text-shadow: #666 0 1px 1px
+    font-weight: bold
 
-        img
-            vertical-align: middle
+    img
+        vertical-align: middle
 
-        .bullet
-            display: inline-block
-            padding: 0 0.5em
+    .bullet
+        display: inline-block
+        padding: 0 0.5em
 
-        a.invisilink
-            &:link, &:hover, &:visited, &:active
-                text-decoration: none
-            &:hover
-                text-decoration: underline
+    a.invisilink
+        &:link, &:hover, &:visited, &:active
+            text-decoration: none
+        &:hover
+            text-decoration: underline
 
     a:link, a:hover, a:visited, a:active
         color: white
