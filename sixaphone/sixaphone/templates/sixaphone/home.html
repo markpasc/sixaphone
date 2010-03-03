@@ -76,26 +76,6 @@
     {% endfor %}
     </div>
 
-{% endblock %}
-
-{% block left_foot %}
-    {% if not prev_page %}
-    <div id="follow-box">
-    <div id="follow">
-        <h3>
-            <a href="http://profile.typepad.com/sixaphone"><img src="http://up4.typepad.com/6a0128776b019c970c0120a8b91624970b-50si" width="50" height="50"></a>
-            <a href="http://profile.typepad.com/sixaphone">Six-A-Phone</a>
-        </h3>
-        <div id="follow-frame">
-            <iframe src="http://profile.typepad.com/services/embed/profile/6p0128776b019c970c/follow_module" width="300" height="125" frameborder="0" scrolling="no"></iframe>
-        </div>
-    </div>
-    </div>
-    {% endif %}
-{% endblock %}
-
-{% block right_foot %}
-
     <p id="page">
         {% if prev_page %}
             {% ifequal page 2 %}
@@ -115,4 +95,20 @@
         {% endif %}
     </p>
 
+{% endblock %}
+
+{% block left_foot %}
+    {% if not prev_page %}
+    <div id="follow-box">
+    <div id="follow">
+        <h3>
+            <a href="http://profile.typepad.com/sixaphone"><img src="http://up4.typepad.com/6a0128776b019c970c0120a8b91624970b-50si" width="50" height="50"></a>
+            <a href="http://profile.typepad.com/sixaphone">Six-A-Phone</a>
+        </h3>
+        <div id="follow-frame">
+            <iframe src="http://profile.typepad.com/services/embed/profile/6p0128776b019c970c/follow_module" width="300" height="125" frameborder="0" scrolling="no"></iframe>
+        </div>
+    </div>
+    </div>
+    {% endif %}
 {% endblock %}

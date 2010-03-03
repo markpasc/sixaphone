@@ -61,23 +61,21 @@
                 </div>
 
                 <h1><a href="{% url home %}"><img src="{% url static path="sixaphone/phone.jpg" %}"></a></h1>
-                <h1 class="tk-chippewa-falls"><a href="{% url home %}">Six-A-Phone</a></h1>
+                <h1 id="title" class="tk-chippewa-falls"><a href="{% url home %}">Six-A-Phone</a></h1>
             </div>
 
             <div class="grid_7">
                 {% block content %}{% endblock %}
             </div>
 
-            <div class="grid_5">
-                {% block left_foot %}{% endblock %}
-            </div>
-
-            <div class="grid_7">
-                {% block right_foot %}{% endblock %}
-            </div>
-
         </div>
         <div id="not-a-footer"></div>
+    </div>
+
+    <div class="container_12">
+        <div class="grid_5">
+            {% block left_foot %}{% endblock %}
+        </div>
     </div>
 
     <div id="footer">
