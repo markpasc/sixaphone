@@ -82,20 +82,21 @@ def ping_website(url):
             resp.status, content)
 
 
-def upload_audio(opts, filename):
-    if filename.endswith('.mp3'):
-        content_type = 'audio/mp3'
-    else:
-        content_type, encoding = mimetypes.guess_type(filename)
-        if content_type is None:
-            raise ValueError('Could not identify mime type of filename %r' % filename)
+def upload_audio(opts, filename=None):
+    if filename is not None:
+        if filename.endswith('.mp3'):
+            content_type = 'audio/mp3'
+        else:
+            content_type, encoding = mimetypes.guess_type(filename)
+            if content_type is None:
+                raise ValueError('Could not identify mime type of filename %r' % filename)
 
-    with open(filename) as audio:
-        post_to_typepad(audio, content_type)
+        with open(filename) as audio:
+            post_to_typepad(audio, content_type)
 
-    # Move the file, if asked.
-    if opts.moveto is not None:
-        shutil.move(filename, opts.moveto)
+        # Move the file, if asked.
+        if opts.moveto is not None:
+            shutil.move(filename, opts.moveto)
 
     # Tell sixaphone a post was posted (so the caches are invalidated).
     if opts.url is not None:
