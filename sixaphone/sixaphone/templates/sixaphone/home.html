@@ -79,6 +79,7 @@
 {% endblock %}
 
 {% block left_foot %}
+    {% if not prev_page %}
     <div id="follow-box">
     <div id="follow">
         <h3>
@@ -90,6 +91,7 @@
         </div>
     </div>
     </div>
+    {% endif %}
 {% endblock %}
 
 {% block right_foot %}
