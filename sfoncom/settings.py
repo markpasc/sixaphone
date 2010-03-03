@@ -108,6 +108,7 @@ INSTALLED_APPS = (
     'debug_toolbar',
     'timezones',
     'typepadapp',
+    'ganalytics',
     'sixaphone',
 )
 

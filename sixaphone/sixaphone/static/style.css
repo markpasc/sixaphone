@@ -4,6 +4,9 @@
 #content {
   margin-top: 20px; }
 
+.hidden {
+  display: none; }
+
 #hi {
   text-align: right; }
   #hi img {
@@ -185,16 +188,52 @@ h1 {
       box-shadow: 0 1px 2px #cccccc;
       -moz-box-shadow: 0 1px 2px #cccccc;
       -webkit-box-shadow: 0 1px 2px #cccccc; }
+  .player .tags {
+    margin: 10px 0 0 0; }
+    .player .tags a {
+      display: inline-block;
+      position: relative;
+      font-size: 12px;
+      line-height: 14px;
+      height: 14px; }
+      .player .tags a span {
+        display: inline-block;
+        font-size: 12px;
+        line-height: 14px;
+        height: 14px;
+        padding: 0; }
+      .player .tags a .point {
+        width: 6px;
+        background: url(tag.png) no-repeat 0px 0px; }
+      .player .tags a .tail {
+        width: 6px;
+        background: url(tag.png) no-repeat -6px 0px;
+        margin-right: -3px; }
+      .player .tags a .text {
+        background: #666;
+        padding: 0px 4px; }
+      .player .tags a:link, .player .tags a:hover, .player .tags a:visited, .player .tags a:active {
+        color: white;
+        text-decoration: none; }
+      .player .tags a:hover .text {
+        background: #66c; }
+      .player .tags a:hover .point {
+        background-position: 0px -14px; }
+      .player .tags a:hover .tail {
+        background-position: -6px -14px; }
   .player .data {
     display: inline-block;
     float: right;
-    margin-top: 10px;
+    margin: 10px 0 0 10px;
     text-align: right; }
   .player .favorite {
     display: inline-block;
     float: left;
-    margin-top: 10px;
+    margin: 10px 10px 0 0;
     text-align: left; }
+  .player .add-tag {
+    margin: 10px 0 0 0;
+    text-align: center; }
 
 .player-2 .statusbar .position {
   background: #b51890; }
@@ -257,3 +296,62 @@ a.arrow:link, a.arrow:visited, a.arrow:active {
   text-decoration: none; }
 a.arrow:hover {
   text-decoration: underline; }
+
+#follow-box {
+  position: relative; }
+
+#follow {
+  position: absolute;
+  left: 80px;
+  bottom: 10px;
+  background: rgb(233, 242, 247);
+  padding: 10px;
+  box-shadow: #999999 0 1px 2px;
+  -moz-box-shadow: #999999 0 1px 2px;
+  -webkit-box-shadow: #999999 0 1px 2px;
+  border-radius: 2px;
+  -moz-border-radius: 2px;
+  -webkit-border-radius: 2px; }
+  #follow h3 {
+    line-height: 50px;
+    margin: 0 0 10px 0; }
+    #follow h3 img {
+      vertical-align: middle;
+      margin-right: 0.5em; }
+    #follow h3 a:link, #follow h3 a:hover, #follow h3 a:visited, #follow h3 a:active {
+      color: black;
+      text-decoration: none; }
+    #follow h3 a:hover {
+      text-decoration: underline; }
+
+#follow-frame {
+  position: relative;
+  overflow: hidden;
+  width: 200px;
+  height: 65px; }
+  #follow-frame iframe {
+    position: absolute;
+    top: 0;
+    right: 0; }
+
+#footer {
+  background: #90b518;
+  padding: 0;
+  margin: 0; }
+  #footer #footer-content {
+    padding: 1.5ex 0;
+    color: white;
+    text-align: center;
+    text-shadow: #666 0 1px 1px;
+    font-weight: bold; }
+    #footer #footer-content img {
+      vertical-align: middle; }
+    #footer #footer-content .bullet {
+      display: inline-block;
+      padding: 0 0.5em; }
+    #footer #footer-content a.invisilink:link, #footer #footer-content a.invisilink:hover, #footer #footer-content a.invisilink:visited, #footer #footer-content a.invisilink:active {
+      text-decoration: none; }
+    #footer #footer-content a.invisilink:hover {
+      text-decoration: underline; }
+  #footer a:link, #footer a:hover, #footer a:visited, #footer a:active {
+    color: white; }

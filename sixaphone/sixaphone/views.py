@@ -17,6 +17,8 @@ from typepadapp.caching import CacheInvalidator
 from typepadapp.models import Asset, Favorite
 import typepadapp.signals
 
+from sixaphone.models import Tag
+
 
 log = logging.getLogger(__name__)
 
@@ -34,13 +36,12 @@ def oops(fn):
     return hoops
 
 
-def audio_events_from_events(events):
-    for event in events:
-        asset = event.object
-        audio = audio_from_asset(asset)
+def audio_entries_from_entries(entries):
+    for entry in entries:
+        audio = audio_from_asset(entry)
         if audio is None:
             continue
-        yield audio, event
+        yield audio, entry
 
 
 def audio_from_asset(asset):
@@ -52,6 +53,23 @@ def audio_from_asset(asset):
         return audio
 
 
+def add_tags_to_entries(audio_entries):
+    xids = list()
+    entry_with_xid = dict()
+    for audio, entry in audio_entries:
+        xid = entry.xid
+        xids.append(xid)
+        entry_with_xid[xid] = entry
+
+    tags = Tag.objects.filter(asset__in=xids)
+    for tag in tags:
+        asset = entry_with_xid[tag.asset]
+        try:
+            asset.tags.append(tag)
+        except AttributeError:
+            asset.tags = [tag]
+
+
 def home(request, page=1):
     page = int(page)
     start_index = (page - 1) * 10 + 1
@@ -61,14 +79,17 @@ def home(request, page=1):
         request.user = get_user(request)
         events = request.group.events.filter(max_results=max_results, start_index=start_index)
 
+    audio_entries = list(audio_entries_from_entries(event.object for event
+        in events if event.object))
+    add_tags_to_entries(audio_entries)
+
     return TemplateResponse(request, 'sixaphone/home.html', {
-        'events': events,
         'page': page,
         'prev_page': page - 1 if page > 1 else False,
         'next_page': page + 1 if start_index + max_results < events.total_results else False,
         'stardex': start_index + max_results,
         'totresu': events.total_results,
-        'audio_events': list(audio_events_from_events(events)),
+        'audio_entries': audio_entries,
     })
 
 
@@ -110,6 +131,9 @@ def entry(request, xid):
         entry = Asset.get_by_url_id(xid)
         favs = entry.favorites
 
+    audio = audio_from_asset(entry)
+    add_tags_to_entries(((audio, entry),))
+
     return TemplateResponse(request, 'sixaphone/entry.html', {
         'entry': entry,
         'audio': audio_from_asset(entry),
@@ -117,10 +141,37 @@ def entry(request, xid):
     })
 
 
+def tag(request, tag, page=1):
+    page = int(page)
+    first = (page - 1) * 10
+    last = first + 10 + 1
+
+    tags = Tag.objects.filter(tag=tag).order_by('-created')[first:last]
+    has_next_page = True if len(tags) > 10 else False
+    tags = tags[:10]
+
+    with typepad.client.batch_request():
+        request.user = get_user(request)
+        assets = [Asset.get_by_url_id(tagject.asset) for tagject in tags]
+
+    audio_entries = list(audio_entries_from_entries(assets))
+    add_tags_to_entries(audio_entries)
+
+    return TemplateResponse(request, 'sixaphone/tag.html', {
+        'audio_entries': audio_entries,
+        'tag': tag,
+        'page': page,
+        'prev_page': page - 1 if page > 1 else False,
+        'next_page': page + 1 if len(tags) > 10 else False,
+    })
+
+
 @oops
 def favorite(request):
     if request.method != 'POST':
         return HttpResponse('POST required at this url', status=400, content_type='text/plain')
+    if not request.user.is_authenticated():
+        return HttpResponse('silly rabbit, only signed-in folks can favorite', status=400, content_type='text/plain')
 
     action = request.POST.get('action', 'favorite')
     asset_id = request.POST.get('asset_id', '')
@@ -141,6 +192,41 @@ def favorite(request):
         group=request.group)
 
     return HttpResponse('OK', content_type='text/plain')
+
+
+@oops
+def add_tags(request):
+    if request.method != 'POST':
+        return HttpResponse('POST required at this url', status=400, content_type='text/plain')
+    if not request.user.is_authenticated():
+        return HttpResponse('silly rabbit, only signed-in folks can add tags', status=400, content_type='text/plain')
+
+    action = request.POST.get('action', 'add')
+    asset_id = request.POST.get('asset_id', '')
+    tags = request.POST.get('tags', '')
+    try:
+        (asset_id,) = re.findall('6a\w+', asset_id)
+    except TypeError:
+        raise Http404
+
+    if action != 'add':
+        return HttpResponse('Unsupported action %r' % action, status=400, content_type='text/plain')
+    if not tags:
+        return HttpResponse('Unsupported tags %r' % tags, status=400, content_type='text/plain')
+
+    with typepad.client.batch_request():
+        request.user = get_user(request)
+    xid = request.user.xid
+    by_name = request.user.display_name
+
+    result = list()
+    for tag in tags.split(','):
+        tag = tag.strip()
+        t = Tag(asset=asset_id, tag=tag, by=xid, by_name=by_name)
+        t.save()
+        result.append({'tag': tag, 'name': by_name})
+
+    return HttpResponse(json.dumps(result), content_type='application/javascript+json')
 
 
 def uncache_favorites(sender, instance, **kwargs):

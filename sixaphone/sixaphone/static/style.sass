@@ -4,6 +4,9 @@
 #content
     margin-top: 20px
 
+.hidden
+    display: none
+
 #hi
     text-align: right
 
@@ -162,17 +165,60 @@ h1
             background: #90b518
             +boxshadow(0 1px 2px #ccc)
 
+    .tags
+        margin: 10px 0 0 0
+
+        a
+            display: inline-block
+            position: relative
+            font-size: 12px
+            line-height: 14px
+            height: 14px
+
+            span
+                display: inline-block
+                font-size: 12px
+                line-height: 14px
+                height: 14px
+                padding: 0
+
+            .point
+                width: 6px
+                background: url(tag.png) no-repeat 0px 0px
+            .tail
+                width: 6px
+                background: url(tag.png) no-repeat -6px 0px
+                margin-right: -3px
+            .text
+                background: #666
+                padding: 0px 4px
+
+            &:link, &:hover, &:visited, &:active
+                color: white
+                text-decoration: none
+            &:hover
+                .text
+                    background: #66c
+                .point
+                    background-position: 0px -14px
+                .tail
+                    background-position: -6px -14px
+
     .data
         display: inline-block
         float: right
-        margin-top: 10px
+        margin: 10px 0 0 10px
         text-align: right
 
     .favorite
         display: inline-block
         float: left
-        margin-top: 10px
+        margin: 10px 10px 0 0
         text-align: left
+
+    .add-tag
+        margin: 10px 0 0 0
+        text-align: center
 
 .player-2
     .statusbar
@@ -249,3 +295,66 @@ a.arrow
 
     &:hover
         text-decoration: underline
+
+#follow-box
+    position: relative
+
+#follow
+    position: absolute
+    left: 80px
+    bottom: 10px
+    background: rgb(233, 242, 247)
+    padding: 10px
+    +boxshadow(#999 0 1px 2px)
+    +borderradius(2px)
+
+    h3
+        line-height: 50px
+        margin: 0 0 10px 0
+        img
+            vertical-align: middle
+            margin-right: 0.5em
+        a:link, a:hover, a:visited, a:active
+            color: black
+            text-decoration: none
+        a:hover
+            text-decoration: underline
+
+#follow-frame
+    position: relative
+    overflow: hidden
+    width: 200px
+    height: 65px
+
+    iframe
+        position: absolute
+        top: 0
+        right: 0
+
+#footer
+    background: #90b518
+    padding: 0
+    margin: 0
+
+    #footer-content
+        padding: 1.5ex 0
+        color: white
+        text-align: center
+        text-shadow: #666 0 1px 1px
+        font-weight: bold
+
+        img
+            vertical-align: middle
+
+        .bullet
+            display: inline-block
+            padding: 0 0.5em
+
+        a.invisilink
+            &:link, &:hover, &:visited, &:active
+                text-decoration: none
+            &:hover
+                text-decoration: underline
+
+    a:link, a:hover, a:visited, a:active
+        color: white

@@ -9,13 +9,13 @@
     </div>
 
     <script type="text/javascript">
-        var xids = [ {% for audio, event in audio_events %}
-            '{{ event.xid }}'
+        var xids = [ {% for audio, entry in audio_entries %}
+            '{{ entry.xid }}'
             {% if forloop.last %}{% else %},{% endif %}
         {% endfor %} ];
 
-        var asset_ids = [ {% for audio, event in audio_events %}
-            'asset-{{ event.object.xid }}'
+        var asset_ids = [ {% for audio, entry in audio_entries %}
+            'asset-{{ entry.xid }}'
             {% if forloop.last %}{% else %},{% endif %}
         {% endfor %} ];
 
@@ -49,11 +49,11 @@
                 $.each(xids, function (i, val) {
                     if (i < xids.length - 1) {
                         $('#player-' + val).one('finished', function () {
-                            soundManager.load('event-' + xids[i + 1]);
+                            soundManager.load('sound-' + xids[i + 1]);
                             $('#player-' + xids[i + 1]).delay(1000).queue(function () {
                                 $('.statusbar .position').css({width: 0});
                                 soundManager.stopAll();
-                                soundManager.play('event-' + xids[i + 1]);
+                                soundManager.play('sound-' + xids[i + 1]);
                                 $(this).dequeue();
                             });
                         });
@@ -62,7 +62,7 @@
 
                 $('.statusbar .position').css({width: 0});
                 soundManager.stopAll();
-                soundManager.play('event-' + xids[0]);
+                soundManager.play('sound-' + xids[0]);
 
                 return false;
             }).removeClass('disabled');
@@ -70,12 +70,29 @@
     </script>
 
     <div id="players">
-    {% for audio, event in audio_events %}
-        {% with event.object as entry %}
-            {% include "sixaphone/player.html" %}
-        {% endwith %}
+    {% for audio, entry in audio_entries %}
+        <!-- hi entry {{ entry }} -->
+        {% include "sixaphone/player.html" %}
     {% endfor %}
     </div>
+
+{% endblock %}
+
+{% block left_foot %}
+    <div id="follow-box">
+    <div id="follow">
+        <h3>
+            <a href="http://profile.typepad.com/sixaphone"><img src="http://up4.typepad.com/6a0128776b019c970c0120a8b91624970b-50si" width="50" height="50"></a>
+            <a href="http://profile.typepad.com/sixaphone">Six-A-Phone</a>
+        </h3>
+        <div id="follow-frame">
+            <iframe src="http://profile.typepad.com/services/embed/profile/6p0128776b019c970c/follow_module" width="300" height="125" frameborder="0" scrolling="no"></iframe>
+        </div>
+    </div>
+    </div>
+{% endblock %}
+
+{% block right_foot %}
 
     <p id="page">
         {% if prev_page %}

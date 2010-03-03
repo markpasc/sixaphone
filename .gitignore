@@ -6,3 +6,5 @@ pip-log.txt
 sfoncom/sfoncom.db
 sixaphone.tmproj
 .sass-cache
+*.graffle
+sixaphone/sixaphone/static/phone.jpg
