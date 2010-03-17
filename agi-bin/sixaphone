@@ -25,6 +25,7 @@ $SIG{PIPE} = $shutdown_callback;
 sleep 2;
 
 $AGI->stream_file('vm-intro', '#');
+$AGI->stream_file('beep', '#');
 
 my $record_options = sprintf("%s.wav,0,%d,k", $basename, POST_TIME_LIMIT);
 $AGI->record_file($basename, "wav", "1234567890#", POST_TIME_LIMIT * 1000, 1);
