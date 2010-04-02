@@ -8,7 +8,7 @@
     {% for fav in favorites %}
     <p class="favorite">
         {% with fav.author as user %}
-            <a href="{{ user.typepad_url }}"><img src="{{ user|userpicsquare:50 }}"></a> <a href="{{ user.typepad_url }}">{{ user.display_name }}</a> saved this post as a favorite
+            <a href="{{ user.typepad_url }}"><img src="{% with user|userpicsquare:50 as userpic %}{{ userpic.url }}{% endwith %}"></a> <a href="{{ user.typepad_url }}">{{ user.display_name }}</a> saved this post as a favorite
         {% endwith %}
     </p>
     {% endfor %}
