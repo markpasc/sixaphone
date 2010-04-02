@@ -49,8 +49,7 @@ def audio_from_asset(asset):
         return
     if asset.object_type != 'tag:api.typepad.com,2009:Audio':
         return
-    for audio in asset.links['rel__enclosure']:
-        return audio
+    return asset.audio_link
 
 
 def add_tags_to_entries(audio_entries):

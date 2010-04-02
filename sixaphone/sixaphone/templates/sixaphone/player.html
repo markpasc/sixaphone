@@ -5,7 +5,7 @@
 
     <div class="control">
         <span class="tp-button"><span class="button button-xl button-play">
-            <a href="{{ audio.href }}" class="play disabled"><span class="control-text-play">▶</span><span class="control-text-pause">▮▮</span></a>
+            <a href="{{ audio.url }}" class="play disabled"><span class="control-text-play">▶</span><span class="control-text-pause">▮▮</span></a>
         </span></span>
     </div>
 
@@ -110,7 +110,7 @@ soundManager.onready(function (status) {
 
     soundManager.createSound({
         id: 'sound-{{ entry.xid }}',
-        url: '{{ audio.href }}',
+        url: '{{ audio.url }}',
         whileloading: function () {
             var loaded = (this.bytesTotal == 0 ? 0 : 100 * this.bytesLoaded / this.bytesTotal);
             $('#loading-{{ entry.xid }}').css({width: loaded + '%'});
